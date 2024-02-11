@@ -1,0 +1,20 @@
+name: xen_emojify
+description: "Facebook like reaction widget, based on animated_emoji flutter package."
+version: 0.0.1
+homepage: https://github.com/xenSlayer/xen_emojify
+
+environment:
+  sdk: ">=3.2.6 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  animated_emoji: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
