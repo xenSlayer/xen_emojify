@@ -114,11 +114,14 @@ class _XenEmojifyState extends State<XenEmojify> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.emojifyWidget ??
-        EmojifyWidget(
-          onTap: _showDock,
-          xenEmojifyDock: widget.xenEmojifyDock,
-        );
+    return SizedBox(
+      key: selectedWidgetKey,
+      child: widget.emojifyWidget ??
+          EmojifyWidget(
+            onTap: _showDock,
+            xenEmojifyDock: widget.xenEmojifyDock,
+          ),
+    );
   }
 }
 
@@ -279,8 +282,9 @@ class _ReactionButtonState extends State<ReactionButton>
                       child: Transform.scale(
                         scale: _selectedEmojiAnimation.value,
                         child: AnimatedEmoji(
-                            _selectedEmoji as AnimatedEmojiData,
-                            repeat: true),
+                          _selectedEmoji as AnimatedEmojiData,
+                          repeat: true,
+                        ),
                       ),
                     );
                   }

@@ -8,8 +8,8 @@ class XenEmojifyDock extends StatefulWidget {
   /// [XenEmojifyDock] is a widget that allows you to display emojis
   const XenEmojifyDock({
     required this.xenEmojis,
-    this.dockColor = const Color.fromARGB(201, 255, 255, 255),
-    this.dockSize = const Size(300, 200),
+    this.dockColor = const Color.fromARGB(200, 37, 17, 17),
+    this.dockSize = const Size(500, 80),
     this.repeatEmojiAnimation = false,
     this.onTap,
   });
@@ -27,10 +27,11 @@ class XenEmojifyDock extends StatefulWidget {
   final Size dockSize;
 
   /// Whether to repeat the emoji animation
+  ///
+  /// default: [false]
   final bool repeatEmojiAnimation;
 
   /// Perform certain action when tapped
-
   final Function(AnimatedEmojiData emojiData)? onTap;
 
   @override
@@ -70,36 +71,41 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.dockSize.width,
-      height: widget.dockSize.height,
-      decoration: BoxDecoration(
-        color: widget.dockColor,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
-      ),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.all(16),
-        children: [
-          for (final (index, reaction) in widget.xenEmojis.indexed)
-            MouseRegion(
-              onEnter: (_) => _zoomControllers[index].forward(),
-              onExit: (_) => _zoomControllers[index].reverse(),
-              child: AnimatedBuilder(
-                animation: _zoomAnimations[index],
-                builder: (context, child) {
-                  return GestureDetector(
-                    onTap: () => widget.onTap?.call(reaction),
-                    child: AnimatedEmoji(
-                      reaction,
-                      size: _zoomAnimations[index].value,
-                      repeat: widget.repeatEmojiAnimation,
-                    ),
-                  );
-                },
-              ),
-            ),
-        ],
+    return Focus(
+      focusNode: FocusNode(),
+      child: Container(
+        width: widget.dockSize.width,
+        height: widget.dockSize.height,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: widget.dockColor.withOpacity(0.5),
+            borderRadius: const BorderRadius.all(Radius.circular(32)),
+          ),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(16),
+            children: [
+              for (final (index, reaction) in widget.xenEmojis.indexed)
+                MouseRegion(
+                  onEnter: (_) => _zoomControllers[index].forward(),
+                  onExit: (_) => _zoomControllers[index].reverse(),
+                  child: AnimatedBuilder(
+                    animation: _zoomAnimations[index],
+                    builder: (context, child) {
+                      return GestureDetector(
+                        onTap: () => widget.onTap?.call(reaction),
+                        child: AnimatedEmoji(
+                          reaction,
+                          size: _zoomAnimations[index].value,
+                          repeat: widget.repeatEmojiAnimation,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
