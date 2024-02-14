@@ -29,20 +29,13 @@ class XenEmojifyExample extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 300),
           Center(
-            child: ReactionButton(
-              reactions: AnimatedEmojis.values.sublist(0, 10).toList(),
-            ),
-          ),
-          const SizedBox(height: 100),
-          const XenEmojify(
-            xenEmojifyDock: XenEmojifyDock(
-              onTap: print,
-              xenEmojis: [
-                AnimatedEmojis.airplaneArrival,
-                AnimatedEmojis.worried,
-              ],
+            child: XenEmojify(
+              onEmojiSelect: print,
+              xenEmojifyDock: XenEmojifyDock(
+                onTap: print,
+                xenEmojis: AnimatedEmojis.values.sublist(0, 20).toList(),
+              ),
             ),
           ),
         ],

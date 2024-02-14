@@ -1,15 +1,24 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 // Define a mixin for commonly used animation behaviors
-// ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:xen_emojify/src/xen_emojify.dart';
 
-mixin XenEmojifyAnimationMixin on State {
+///
+mixin XenEmojifyAnimationMixin on State<XenEmojify> {
+  ///
   late List<AnimationController> zoomControllers;
+
+  ///
   late List<Animation<double>> zoomAnimations;
 
+  ///
   late AnimationController selectedEmojiController;
+
+  ///
   late Animation<double> selectedEmojiAnimation;
+
+  ///
 
   void animateSelectedEmoji() {
     selectedEmojiAnimation = CurvedAnimation(
@@ -33,8 +42,8 @@ mixin XenEmojifyAnimationMixin on State {
     );
   }
 
-  @mustCallSuper
-  void initializeControllers(TickerProvider vsync, int emojiCount) {
+  ///
+  void initializeAnimationControllers(TickerProvider vsync, int emojiCount) {
     zoomControllers = List.generate(emojiCount, (index) {
       return AnimationController(
         vsync: vsync,
@@ -52,12 +61,11 @@ mixin XenEmojifyAnimationMixin on State {
     );
   }
 
-  @override
-  void dispose() {
+  ///
+  void disposeAnimationControllers() {
     for (final controller in zoomControllers) {
       controller.dispose();
     }
     selectedEmojiController.dispose();
-    super.dispose();
   }
 }

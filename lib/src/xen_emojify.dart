@@ -2,64 +2,25 @@
 
 import 'package:animated_emoji/animated_emoji.dart';
 import 'package:flutter/material.dart';
+import 'package:xen_emojify/src/xen_emojify_animation_mixin.dart';
+import 'package:xen_emojify/src/xen_emojify_controller_mixin.dart';
 import 'package:xen_emojify/src/xen_emojify_dock.dart';
-
-/// [XenEmojify] is a widget that allows you to display emojis
-
-class EmojifyWidget extends StatelessWidget {
-  ///
-  EmojifyWidget({
-    required this.xenEmojifyDock,
-    this.onTap,
-    this.padding = const EdgeInsets.all(8.0),
-    this.defaultWidget = const Icon(Icons.add_circle_outline_rounded),
-  });
-
-  /// The dock to be displayed when tapped
-  ///
-  /// contains the list of emojis
-  final XenEmojifyDock xenEmojifyDock;
-
-  /// Perform certain action when tapped
-  ///
-  /// Like calling other methods
-  final VoidCallback? onTap;
-
-  /// The padding around the main selection widget and the placeholder
-  ///
-  /// default: [EdgeInsets.all(8.0)]
-  final EdgeInsetsGeometry padding;
-
-  /// The default widget to be displayed
-  ///
-  /// Example a button or a text
-  ///
-  /// default: [Icon(Icons.add_circle_outline_rounded)]
-  final Widget defaultWidget;
-
-  final _borderRadius = BorderRadius.circular(32);
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.grey[200],
-      borderRadius: _borderRadius,
-      child: InkWell(
-        borderRadius: _borderRadius,
-        onTap: onTap,
-        child: Padding(padding: padding, child: defaultWidget),
-      ),
-    );
-  }
-}
+import 'package:xen_emojify/src/xen_emojify_widget.dart';
 
 ///
 class XenEmojify extends StatefulWidget {
   /// [XenEmojify] is a widget that allows you to display emojis
-  const XenEmojify({required this.xenEmojifyDock, this.emojifyWidget});
+  const XenEmojify({
+    required this.xenEmojifyDock,
+    this.emojifyWidget,
+    this.onEmojiSelect,
+  });
 
   ///
   final XenEmojifyDock xenEmojifyDock;
+
+  ///
+  final void Function(AnimatedEmojiData emojiData)? onEmojiSelect;
 
   /// The initial widget to be displayed
   final EmojifyWidget? emojifyWidget;
@@ -68,59 +29,46 @@ class XenEmojify extends StatefulWidget {
   State<XenEmojify> createState() => _XenEmojifyState();
 }
 
-class _XenEmojifyState extends State<XenEmojify> {
-  late LayerLink layerLink;
-  late GlobalKey selectedWidgetKey;
-  late GlobalKey reactionWidgetKey;
-  late OverlayEntry? overlayEntry;
-  late Offset overlayOffset;
-
+class _XenEmojifyState extends State<XenEmojify>
+    with
+        XenEmojifyAnimationMixin,
+        XenEmojifyControllerMixin,
+        TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    selectedWidgetKey = GlobalKey();
-    reactionWidgetKey = GlobalKey();
-    layerLink = LayerLink();
-  }
-
-  void _calculatePosition() {
-    if (selectedWidgetKey.currentContext != null) {
-      final renderBox =
-          selectedWidgetKey.currentContext!.findRenderObject()! as RenderBox;
-      overlayOffset = renderBox.localToGlobal(Offset.zero);
-    }
-  }
-
-  void _showDock() {
-    _calculatePosition();
-    final overlayState = Overlay.of(context);
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        left: overlayOffset.dx - 500 / 2,
-        top: overlayOffset.dy - 120,
-        child: CompositedTransformFollower(
-          link: layerLink,
-          child: widget.xenEmojifyDock,
-        ),
-      ),
+    initializeAnimationControllers(
+      this,
+      widget.xenEmojifyDock.xenEmojis.length,
     );
-    overlayState.insert(overlayEntry!);
+    initialize();
   }
 
   @override
   void dispose() {
+    disposeAnimationControllers();
+    disposeControllers();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return CompositedTransformTarget(
+      link: xenEmojifyLayerLink,
       key: selectedWidgetKey,
-      child: widget.emojifyWidget ??
-          EmojifyWidget(
-            onTap: _showDock,
-            xenEmojifyDock: widget.xenEmojifyDock,
+      child: Material(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(32),
+        child: InkWell(
+          onTap: showDock,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: currentEmoji != null
+                ? AnimatedEmoji(currentEmoji!)
+                : const Icon(Icons.add_circle_outline_rounded),
           ),
+        ),
+      ),
     );
   }
 }

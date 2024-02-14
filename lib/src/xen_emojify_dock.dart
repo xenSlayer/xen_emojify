@@ -1,6 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
+
 import 'package:animated_emoji/animated_emoji.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -32,21 +32,16 @@ class XenEmojifyDock extends StatefulWidget {
   final bool repeatEmojiAnimation;
 
   /// Perform certain action when tapped
-  final Function(AnimatedEmojiData emojiData)? onTap;
+  final void Function(AnimatedEmojiData emojiData)? onTap;
 
   @override
   State<XenEmojifyDock> createState() => _XenEmojifyDockState();
 }
 
 class _XenEmojifyDockState extends State<XenEmojifyDock>
-    with Diagnosticable, TickerProviderStateMixin {
-  late List<AnimationController> _zoomControllers;
-  late List<Animation<double>> _zoomAnimations;
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-  }
+    with TickerProviderStateMixin {
+  late final List<AnimationController> _zoomControllers;
+  late final List<Animation<double>> _zoomAnimations;
 
   @override
   void initState() {
@@ -58,7 +53,7 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
     });
 
     _zoomAnimations = _zoomControllers.map((controller) {
-      return Tween<double>(begin: 50, end: 90).animate(controller);
+      return Tween<double>(begin: 50, end: 120).animate(controller);
     }).toList();
 
     super.initState();
@@ -71,19 +66,23 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
 
   @override
   Widget build(BuildContext context) {
-    return Focus(
-      focusNode: FocusNode(),
-      child: Container(
-        width: widget.dockSize.width,
-        height: widget.dockSize.height,
-        child: DecoratedBox(
+    return Stack(
+      children: [
+        Container(
+          width: widget.dockSize.width,
+          height: widget.dockSize.height,
           decoration: BoxDecoration(
             color: widget.dockColor.withOpacity(0.5),
             borderRadius: const BorderRadius.all(Radius.circular(32)),
           ),
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.all(16),
+        ),
+        // TODO: Add a scrollable widget
+        SizedBox(
+          width: widget.dockSize.width,
+          // height: widget.dockSize.height,
+          child: Wrap(
+            // scrollDirection: Axis.horizontal,
+            // padding: const EdgeInsets.all(16),
             children: [
               for (final (index, reaction) in widget.xenEmojis.indexed)
                 MouseRegion(
@@ -106,7 +105,7 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
