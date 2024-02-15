@@ -32,9 +32,11 @@ class XenEmojifyExample extends StatelessWidget {
           Center(
             child: XenEmojify(
               onEmojiSelect: print,
-              xenEmojifyDock: XenEmojifyDock(
-                onTap: print,
-                xenEmojis: AnimatedEmojis.values.sublist(0, 20).toList(),
+              animatedEmojis: List.generate(
+                10,
+                (index) => XenEmoji(
+                  animatedEmoji: Text(index.toString()),
+                ),
               ),
             ),
           ),

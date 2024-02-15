@@ -1,11 +1,13 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
+
 import 'package:animated_emoji/emojis.dart';
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/xen_emojify.dart';
+import 'package:xen_emojify/src/xen_emojify_dock.dart';
 
 /// A mixin for commonly used calculator behaviors
 mixin XenEmojifyControllerMixin on State<XenEmojify> {
-  ///
+  /// The layer link
   late LayerLink xenEmojifyLayerLink;
 
   ///
@@ -37,18 +39,24 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
     if (selectedWidgetKey.currentContext != null) {
       final renderBox =
           selectedWidgetKey.currentContext!.findRenderObject()! as RenderBox;
+
       _overlayOffset = renderBox.localToGlobal(Offset.zero);
 
-      final dockSize = _getDockSize(context);
-      print(dockSize);
+      final dock = XenEmojifyDock(
+        xenEmojis: widget.animatedEmojis,
+        onTap: (emoji) {
+          widget.onEmojiSelect?.call(emoji);
+          setCurrentEmoji(emoji);
+        },
+      );
 
       _overlayEntry = OverlayEntry(
-        builder: (context) => Positioned(
-          left: _overlayOffset.dx - (500 - 50) / 2,
-          top: _overlayOffset.dy - 80 / 2 - 60,
-          child: CompositedTransformFollower(
-            link: xenEmojifyLayerLink,
-            child: widget.xenEmojifyDock,
+        builder: (context) => CompositedTransformFollower(
+          link: xenEmojifyLayerLink,
+          child: Positioned(
+            right: _overlayOffset.dx - dock.dockSize.width / 2,
+            top: _overlayOffset.dy - dock.dockSize.height / 2,
+            child: dock,
           ),
         ),
       );
@@ -56,26 +64,22 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
   }
 
   Size? _getDockSize(BuildContext context) {
-    final renderObject = context.findRenderObject();
-    if (renderObject is RenderBox) {
-      return renderObject.size;
-    }
-    return null;
+    final dock = context.findAncestorWidgetOfExactType<XenEmojifyDock>();
+    return dock?.dockSize;
   }
 
-  ///
+  /// Show the dock
   void showDock() {
     _calculatePosition();
     final overlayState = Overlay.of(context);
     overlayState.insert(_overlayEntry!);
   }
 
-  ///
+  /// Set the current emoji
   void setCurrentEmoji(AnimatedEmojiData emojiData) {
     setState(() {
       currentEmoji = emojiData;
-      print('fuck bastard');
+      print('set emoji');
     });
-    widget.xenEmojifyDock.onTap?.call(emojiData);
   }
 }

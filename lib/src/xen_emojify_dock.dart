@@ -2,6 +2,7 @@
 
 import 'package:animated_emoji/animated_emoji.dart';
 import 'package:flutter/material.dart';
+import 'package:xen_emojify/xen_emojify.dart';
 
 ///
 class XenEmojifyDock extends StatefulWidget {
@@ -15,7 +16,7 @@ class XenEmojifyDock extends StatefulWidget {
   });
 
   /// List of emojis to be displayed
-  final List<AnimatedEmojiData> xenEmojis;
+  final List<XenEmoji> xenEmojis;
 
   /// The color of the dock
   /// default: [Colors.grey]
@@ -84,7 +85,7 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
             // scrollDirection: Axis.horizontal,
             // padding: const EdgeInsets.all(16),
             children: [
-              for (final (index, reaction) in widget.xenEmojis.indexed)
+              for (final (index, emoji) in widget.xenEmojis.indexed)
                 MouseRegion(
                   onEnter: (_) => _zoomControllers[index].forward(),
                   onExit: (_) => _zoomControllers[index].reverse(),
@@ -92,12 +93,14 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
                     animation: _zoomAnimations[index],
                     builder: (context, child) {
                       return GestureDetector(
-                        onTap: () => widget.onTap?.call(reaction),
-                        child: AnimatedEmoji(
-                          reaction,
-                          size: _zoomAnimations[index].value,
-                          repeat: widget.repeatEmojiAnimation,
-                        ),
+                        onTap: () => widget.onTap?.call(emoji.animatedEmoji),
+                        child: emoji.animatedEmoji is Widget
+                            ? Material(child: emoji.animatedEmoji as Widget)
+                            : AnimatedEmoji(
+                                emoji.animatedEmoji,
+                                size: _zoomAnimations[index].value,
+                                repeat: widget.repeatEmojiAnimation,
+                              ),
                       );
                     },
                   ),
