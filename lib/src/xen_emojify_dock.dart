@@ -33,7 +33,7 @@ class XenEmojifyDock extends StatefulWidget {
   final bool repeatEmojiAnimation;
 
   /// Perform certain action when tapped
-  final void Function(AnimatedEmojiData emojiData)? onTap;
+  final void Function(XenEmoji emoji)? onTap;
 
   @override
   State<XenEmojifyDock> createState() => _XenEmojifyDockState();
@@ -62,6 +62,9 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
 
   @override
   void dispose() {
+    for (final controller in _zoomControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -93,11 +96,11 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
                     animation: _zoomAnimations[index],
                     builder: (context, child) {
                       return GestureDetector(
-                        onTap: () => widget.onTap?.call(emoji.animatedEmoji),
+                        onTap: () => widget.onTap?.call(emoji),
                         child: emoji.animatedEmoji is Widget
                             ? Material(child: emoji.animatedEmoji as Widget)
                             : AnimatedEmoji(
-                                emoji.animatedEmoji,
+                                emoji.animatedEmoji as AnimatedEmojiData,
                                 size: _zoomAnimations[index].value,
                                 repeat: widget.repeatEmojiAnimation,
                               ),

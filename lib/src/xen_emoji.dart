@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 ///
-class XenEmoji<T> {
+class XenEmoji<T extends Object> {
   ///
   const XenEmoji({required this.animatedEmoji, this.emojiName, this.emojiID})
       : assert(

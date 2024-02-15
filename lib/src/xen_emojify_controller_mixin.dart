@@ -1,85 +1,47 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-import 'package:animated_emoji/emojis.dart';
 import 'package:flutter/material.dart';
-import 'package:xen_emojify/src/xen_emojify.dart';
-import 'package:xen_emojify/src/xen_emojify_dock.dart';
+import 'package:xen_emojify/xen_emojify.dart';
 
 /// A mixin for commonly used calculator behaviors
 mixin XenEmojifyControllerMixin on State<XenEmojify> {
   /// The layer link
-  late LayerLink xenEmojifyLayerLink;
+  late final LayerLink xenEmojifyLayerLink;
 
   ///
-  late GlobalKey selectedWidgetKey;
+  XenEmoji? currentEmoji;
 
   ///
-  AnimatedEmojiData? currentEmoji;
-
-  ///
-  late GlobalKey xenEmojifyWidgetKey;
-  late OverlayEntry? _overlayEntry;
-  late Offset _overlayOffset;
+  late OverlayPortalController dockController;
 
   ///
   void initialize() {
     xenEmojifyLayerLink = LayerLink();
-    selectedWidgetKey = GlobalKey();
-    xenEmojifyWidgetKey = GlobalKey();
+    dockController = OverlayPortalController();
   }
 
   ///
-  void disposeControllers() {
-    _overlayEntry?.remove();
-    _overlayEntry?.dispose();
-  }
-
-  ///
-  void _calculatePosition() {
-    if (selectedWidgetKey.currentContext != null) {
-      final renderBox =
-          selectedWidgetKey.currentContext!.findRenderObject()! as RenderBox;
-
-      _overlayOffset = renderBox.localToGlobal(Offset.zero);
-
-      final dock = XenEmojifyDock(
-        xenEmojis: widget.animatedEmojis,
-        onTap: (emoji) {
-          widget.onEmojiSelect?.call(emoji);
-          setCurrentEmoji(emoji);
-        },
-      );
-
-      _overlayEntry = OverlayEntry(
-        builder: (context) => CompositedTransformFollower(
-          link: xenEmojifyLayerLink,
-          child: Positioned(
-            right: _overlayOffset.dx - dock.dockSize.width / 2,
-            top: _overlayOffset.dy - dock.dockSize.height / 2,
-            child: dock,
-          ),
-        ),
-      );
+  Offset setXenEmojifyPosition() {
+    final dockSize = widget.customDock?.dockSize;
+    final s = context.findAncestorWidgetOfExactType<XenEmojifyDock>();
+    print(s);
+    if (dockSize != null) {
+      return Offset(-dockSize.width / 2, -dockSize.height - 10);
     }
-  }
-
-  Size? _getDockSize(BuildContext context) {
-    final dock = context.findAncestorWidgetOfExactType<XenEmojifyDock>();
-    return dock?.dockSize;
+    return const Offset(0, 0);
   }
 
   /// Show the dock
-  void showDock() {
-    _calculatePosition();
-    final overlayState = Overlay.of(context);
-    overlayState.insert(_overlayEntry!);
+  void toggleDock() {
+    dockController.show();
   }
 
   /// Set the current emoji
-  void setCurrentEmoji(AnimatedEmojiData emojiData) {
+  void setCurrentEmoji(XenEmoji emojiData) {
     setState(() {
       currentEmoji = emojiData;
       print('set emoji');
     });
+    dockController.hide();
   }
 }

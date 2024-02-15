@@ -24,24 +24,30 @@ class XenEmojifyExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: XenEmojify(
-              onEmojiSelect: print,
-              animatedEmojis: List.generate(
-                10,
-                (index) => XenEmoji(
-                  animatedEmoji: Text(index.toString()),
-                ),
+            child: XenEmojify(onEmojiSelect: print, xenEmojis: [
+              XenEmoji<AnimatedEmojiData>(
+                animatedEmoji: AnimatedEmojis.angry,
               ),
-            ),
+              XenEmoji<AnimatedEmojiData>(
+                animatedEmoji: AnimatedEmojis.alarmClock,
+              ),
+              XenEmoji<AnimatedEmojiData>(
+                animatedEmoji: AnimatedEmojis.weary,
+              ),
+            ]),
           ),
         ],
       ),
     );
   }
+}
+
+class CustomXenEmoji extends XenEmoji {
+  CustomXenEmoji({required super.animatedEmoji});
 }
