@@ -1,6 +1,6 @@
-# xen_facebook_reaction
+# xen_emojify
 
-A facebook like reaction built on top of package <a href='https://pub.dev/packages/animated_emoji'>animated_emoji</a>.
+A facebook like reaction built on top of package <a href='https://pub.dev/packages/lottie'>lottie</a>.
 
 
 [![licence](https://img.shields.io/badge/licence-BSD-orange.svg)](https://github.com/xenSlayer/xen_facebook_reaction/blob/master/LICENSE)
