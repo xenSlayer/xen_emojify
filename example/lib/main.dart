@@ -31,23 +31,13 @@ class XenEmojifyExample extends StatelessWidget {
         children: [
           Center(
             child: XenEmojify(onEmojiSelect: print, xenEmojis: [
-              XenEmoji<AnimatedEmojiData>(
-                animatedEmoji: AnimatedEmojis.angry,
-              ),
-              XenEmoji<AnimatedEmojiData>(
-                animatedEmoji: AnimatedEmojis.alarmClock,
-              ),
-              XenEmoji<AnimatedEmojiData>(
-                animatedEmoji: AnimatedEmojis.weary,
-              ),
+              XenEmoji(lottie: 'lottie 1'),
+              XenEmoji(lottie: 'lottie 2'),
+              XenEmoji(lottie: 'lottie 3'),
             ]),
           ),
         ],
       ),
     );
   }
-}
-
-class CustomXenEmoji extends XenEmoji {
-  CustomXenEmoji({required super.animatedEmoji});
 }

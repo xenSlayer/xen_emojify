@@ -7,16 +7,16 @@ import 'package:xen_emojify/src/xen_emojify.dart';
 ///
 mixin XenEmojifyAnimationMixin on State<XenEmojify> {
   ///
-  late List<AnimationController> zoomControllers;
+  late final List<AnimationController> zoomControllers;
 
   ///
-  late List<Animation<double>> zoomAnimations;
+  late final List<Animation<double>> zoomAnimations;
 
   ///
-  late AnimationController selectedEmojiController;
+  late final AnimationController selectedEmojiController;
 
   ///
-  late Animation<double> selectedEmojiAnimation;
+  late final Animation<double> selectedEmojiAnimation;
 
   ///
 

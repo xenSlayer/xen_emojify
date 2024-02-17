@@ -1,19 +1,12 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-import 'package:flutter/widgets.dart';
-import 'package:xen_emojify/xen_emojify.dart';
-
 ///
-class XenEmoji<T extends Object> {
+class XenEmoji {
   ///
-  const XenEmoji({required this.animatedEmoji, this.emojiName, this.emojiID})
-      : assert(
-          animatedEmoji is Widget || animatedEmoji is AnimatedEmojiData,
-          "animatedEmoji must be of type Widget or AnimatedEmojiData",
-        );
+  const XenEmoji({required this.lottie, this.emojiName, this.emojiID});
 
-  /// Animated emoji Data or any other widget
-  final T animatedEmoji;
+  ///
+  final String lottie;
 
   ///
   final String? emojiName;

@@ -1,7 +1,8 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-import 'package:animated_emoji/animated_emoji.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:xen_emojify/src/enums.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
 import 'package:xen_emojify/src/xen_emojify_animation_mixin.dart';
 import 'package:xen_emojify/src/xen_emojify_controller_mixin.dart';
@@ -13,6 +14,7 @@ class XenEmojify extends StatefulWidget {
   /// [XenEmojify] is a widget that allows you to display emojis.
   const XenEmojify({
     required this.xenEmojis,
+    this.lottieSource = LottieSource.network,
     this.selectedEmojiSize = 40,
     this.emojifyWidget,
     this.onEmojiSelect,
@@ -21,6 +23,9 @@ class XenEmojify extends StatefulWidget {
 
   /// List of emojis to be displayed.
   final List<XenEmoji> xenEmojis;
+
+  /// The source of the lottie file.
+  final LottieSource lottieSource;
 
   /// The size of the selected emoji.
   final double selectedEmojiSize;
@@ -63,29 +68,37 @@ class _XenEmojifyState extends State<XenEmojify>
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: SizedBox.fromSize(
-            size: size,
-            child: GestureDetector(onTap: dockController.hide),
-          ),
-        ),
-        OverlayPortal(
-          controller: dockController,
-          overlayChildBuilder: (context) {
-            return CompositedTransformFollower(
-              offset: setXenEmojifyPosition(),
-              link: xenEmojifyLayerLink,
-              child: XenEmojifyDock(
-                xenEmojis: widget.xenEmojis,
-                onTap: setCurrentEmoji,
+    return OverlayPortal(
+      controller: dockController,
+      overlayChildBuilder: (context) {
+        return CompositedTransformFollower(
+          offset: setXenEmojifyPosition(),
+          link: xenEmojifyLayerLink,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              const XenEmojifyDock(),
+              ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => LottieSource.lottieBuilder(
+                  widget.lottieSource,
+                  widget.xenEmojis[index].lottie,
+                ),
               ),
-            );
-          },
-          child: CompositedTransformTarget(
+            ],
+          ),
+        );
+      },
+      child: Stack(
+        children: [
+          ColoredBox(
+            color: Colors.black.withOpacity(0.2),
+            child: SizedBox.fromSize(
+              size: size,
+              child: GestureDetector(onTap: dockController.hide),
+            ),
+          ),
+          CompositedTransformTarget(
             link: xenEmojifyLayerLink,
             child: InkWell(
               highlightColor: Colors.amber,
@@ -93,26 +106,27 @@ class _XenEmojifyState extends State<XenEmojify>
               onTap: toggleDock,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: resolveWidget(widget.selectedEmojiSize),
+                child: LottieBuilder(
+                    height: 30,
+                    width: 30,
+                    lottie: NetworkLottie(
+                        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json')),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+}
 
-  Widget resolveWidget(double size) {
-    if (currentEmoji != null) {
-      if (currentEmoji?.animatedEmoji.runtimeType == Widget) {
-        return currentEmoji?.animatedEmoji as Widget;
-      } else {
-        return AnimatedEmoji(
-          currentEmoji?.animatedEmoji as AnimatedEmojiData,
-          size: size,
-        );
-      }
-    }
-    return const Icon(Icons.add_circle_outline_rounded);
+///
+class LottieLoadErrorBuilder extends StatelessWidget {
+  ///
+  const LottieLoadErrorBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

@@ -23,8 +23,6 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
   ///
   Offset setXenEmojifyPosition() {
     final dockSize = widget.customDock?.dockSize;
-    final s = context.findAncestorWidgetOfExactType<XenEmojifyDock>();
-    print(s);
     if (dockSize != null) {
       return Offset(-dockSize.width / 2, -dockSize.height - 10);
     }
