@@ -1,5 +1,7 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
+///
+/// xen emojify
 library xen_emojify;
 
 export 'src/enums.dart' show LottieSource;

@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:xen_emojify/src/enums.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
 import 'package:xen_emojify/src/xen_emojify_animation_mixin.dart';
-import 'package:xen_emojify/src/xen_emojify_controller.dart';
+import 'package:xen_emojify/src/xen_emojify_controller_mixin.dart';
 import 'package:xen_emojify/src/xen_emojify_dock.dart';
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
 
@@ -42,7 +42,7 @@ class XenEmojify extends StatefulWidget {
 class _XenEmojifyState extends State<XenEmojify>
     with
         XenEmojifyAnimationMixin,
-        XenEmojifyController,
+        XenEmojifyControllerMixin,
         TickerProviderStateMixin {
   ///
   late final AnimationController selectedEmojiController;
@@ -101,7 +101,7 @@ class _XenEmojifyState extends State<XenEmojify>
           controller: dockController,
           overlayChildBuilder: (context) {
             return CompositedTransformFollower(
-              offset: setXenEmojifyPosition(),
+              offset: dockPosition(),
               link: xenEmojifyLayerLink,
               child: widget.xenEmojifyDock,
             );
