@@ -24,17 +24,29 @@ class XenEmojifyExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: XenEmojify(onEmojiSelect: print, xenEmojis: [
-              XenEmoji(lottie: 'lottie 1'),
-              XenEmoji(lottie: 'lottie 2'),
-              XenEmoji(lottie: 'lottie 3'),
-            ]),
+            child: XenEmojify(
+              lottieSource: LottieSource.network,
+              xenEmojifyDock: XenEmojifyDock(
+                xenEmojis: [
+                  for (int i = 0; i < 3; i++)
+                    const XenEmoji(
+                      lottie:
+                          'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
+                    ),
+                  const XenEmoji(
+                    lottie:
+                        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
+                  ),
+                ],
+              ),
+              onEmojiSelect: print,
+            ),
           ),
         ],
       ),

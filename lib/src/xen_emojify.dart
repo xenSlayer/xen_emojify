@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:xen_emojify/src/enums.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
 import 'package:xen_emojify/src/xen_emojify_animation_mixin.dart';
-import 'package:xen_emojify/src/xen_emojify_controller_mixin.dart';
+import 'package:xen_emojify/src/xen_emojify_controller.dart';
 import 'package:xen_emojify/src/xen_emojify_dock.dart';
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
 
@@ -13,16 +13,15 @@ import 'package:xen_emojify/src/xen_emojify_widget.dart';
 class XenEmojify extends StatefulWidget {
   /// [XenEmojify] is a widget that allows you to display emojis.
   const XenEmojify({
-    required this.xenEmojis,
+    required this.xenEmojifyDock,
     this.lottieSource = LottieSource.network,
     this.selectedEmojiSize = 40,
     this.emojifyWidget,
     this.onEmojiSelect,
-    this.customDock,
   });
 
-  /// List of emojis to be displayed.
-  final List<XenEmoji> xenEmojis;
+  ///
+  final XenEmojifyDock xenEmojifyDock;
 
   /// The source of the lottie file.
   final LottieSource lottieSource;
@@ -36,9 +35,6 @@ class XenEmojify extends StatefulWidget {
   /// The initial widget to be displayed.
   final EmojifyWidget? emojifyWidget;
 
-  ///
-  final XenEmojifyDock? customDock;
-
   @override
   State<XenEmojify> createState() => _XenEmojifyState();
 }
@@ -46,13 +42,42 @@ class XenEmojify extends StatefulWidget {
 class _XenEmojifyState extends State<XenEmojify>
     with
         XenEmojifyAnimationMixin,
-        XenEmojifyControllerMixin,
+        XenEmojifyController,
         TickerProviderStateMixin {
+  ///
+  late final AnimationController selectedEmojiController;
+
+  ///
+  late final Animation<double> selectedEmojiAnimation;
+
   @override
   void initState() {
     super.initState();
-    initializeAnimationControllers(this, widget.xenEmojis.length);
     initialize();
+    selectedEmojiController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 650),
+    );
+
+    selectedEmojiAnimation = CurvedAnimation(
+      parent: selectedEmojiController,
+      curve: Curves.easeInOutCubic,
+    ).drive(
+      TweenSequence<double>([
+        TweenSequenceItem(
+          tween: Tween<double>(begin: 0.2, end: 1.2),
+          weight: 2,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(begin: 1.2, end: 4),
+          weight: 8,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(begin: 4, end: 1.2),
+          weight: 1,
+        ),
+      ]),
+    );
   }
 
   @override
@@ -65,37 +90,23 @@ class _XenEmojifyState extends State<XenEmojify>
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    return OverlayPortal(
-      controller: dockController,
-      overlayChildBuilder: (context) {
-        return CompositedTransformFollower(
-          offset: setXenEmojifyPosition(),
-          link: xenEmojifyLayerLink,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              const XenEmojifyDock(),
-              ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => LottieSource.build(
-                  widget.lottieSource,
-                  widget.xenEmojis[index].lottie,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-      child: Stack(
-        children: [
-          ColoredBox(
-            color: Colors.black.withOpacity(0.2),
-            child: SizedBox.fromSize(
-              size: size,
-              child: GestureDetector(onTap: dockController.hide),
-            ),
-          ),
-          CompositedTransformTarget(
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SizedBox.fromSize(
+          size: size,
+          child: GestureDetector(onTap: dockController.hide),
+        ),
+        OverlayPortal(
+          controller: dockController,
+          overlayChildBuilder: (context) {
+            return CompositedTransformFollower(
+              offset: setXenEmojifyPosition(),
+              link: xenEmojifyLayerLink,
+              child: widget.xenEmojifyDock,
+            );
+          },
+          child: CompositedTransformTarget(
             link: xenEmojifyLayerLink,
             child: InkWell(
               highlightColor: Colors.amber,
@@ -107,13 +118,14 @@ class _XenEmojifyState extends State<XenEmojify>
                   height: 30,
                   width: 30,
                   lottie: NetworkLottie(
-                      'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json'),
+                    'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
+                  ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// A mixin for commonly used calculator behaviors
-mixin XenEmojifyControllerMixin on State<XenEmojify> {
+mixin XenEmojifyController on State<XenEmojify> {
   /// The layer link
   late final LayerLink xenEmojifyLayerLink;
 
@@ -22,11 +22,8 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
 
   ///
   Offset setXenEmojifyPosition() {
-    final dockSize = widget.customDock?.dockSize;
-    if (dockSize != null) {
-      return Offset(-dockSize.width / 2, -dockSize.height - 10);
-    }
-    return const Offset(0, 0);
+    final dockSize = widget.xenEmojifyDock.dockSize;
+    return Offset(-dockSize.width / 2, -dockSize.height - 10);
   }
 
   /// Show the dock

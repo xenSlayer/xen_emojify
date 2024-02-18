@@ -17,11 +17,28 @@ enum LottieSource {
   const LottieSource();
 
   ///
-  static LottieBuilder build(LottieSource src, String url) {
+  static LottieBuilder build({
+    required LottieSource src,
+    required String url,
+    double? height,
+    double? width,
+  }) {
     return switch (src) {
-      LottieSource.asset => LottieBuilder.asset(url),
-      LottieSource.network => LottieBuilder.network(url),
-      LottieSource.file => LottieBuilder.file(url),
+      LottieSource.asset => LottieBuilder.asset(
+          url,
+          height: height,
+          width: width,
+        ),
+      LottieSource.network => LottieBuilder.network(
+          url,
+          height: height,
+          width: width,
+        ),
+      LottieSource.file => LottieBuilder.file(
+          url,
+          height: height,
+          width: width,
+        ),
     };
   }
 }
