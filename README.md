@@ -1,22 +1,29 @@
 # xen_emojify
 
+[![license](https://img.shields.io/badge/licence-MIT-orange.svg)](https://github.com/xenSlayer/xen_facebook_reaction/blob/master/LICENSE)
+[![Stars](https://img.shields.io/github/stars/xenSlayer/xen_emojify?color=purple)](https://github.com/xenSlayer/xen_emojify)
+[![effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://dart.dev/guides/language/effective-dart)
+
+
+<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE"> **LOTTIE LICENSE** </a>
+
+<hr>
+
+
 A facebook like reaction built on top of package <a href='https://pub.dev/packages/lottie'>lottie</a>.
 Beautiful and clean looking widget similar to facebook reaction button.
 
 
 
-<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE"> **LOTTIE LICENSE** </a>
 
 <br>
 
-<a href="https://www.buymeacoffee.com/kiranpaudel1892"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&amp;emoji=🍺&amp;slug=kiranpaudel1892&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff"></a>
 
 
-[![license](https://img.shields.io/badge/licence-MIT-orange.svg)](https://github.com/xenSlayer/xen_facebook_reaction/blob/master/LICENSE)
-[![Stars](https://img.shields.io/github/stars/xenSlayer/xen_emojify?color=purple)](https://github.com/xenSlayer/xen_emojify)
-[![effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://dart.dev/guides/language/effective-dart)
 
 <img src="misc/xen-emojify.gif">
+
+<a href="https://www.buymeacoffee.com/kiranpaudel1892"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&amp;emoji=🍺&amp;slug=kiranpaudel1892&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff"></a>
 
 
 
