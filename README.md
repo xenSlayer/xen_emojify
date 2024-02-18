@@ -1,7 +1,7 @@
 # xen_emojify
 
-[![license](https://img.shields.io/badge/licence-MIT-orange.svg)](https://github.com/xenSlayer/xen_facebook_reaction/blob/master/LICENSE)
-[![Stars](https://img.shields.io/github/stars/xenSlayer/xen_emojify?color=purple)](https://github.com/xenSlayer/xen_emojify)
+[![license](https://img.shields.io/badge/licence-BSD-white.svg)](https://github.com/xenSlayer/xen_emojify/blob/master/LICENSE)
+[![Stars](https://img.shields.io/github/stars/xenSlayer/xen_emojify)](https://github.com/xenSlayer/xen_emojify)
 [![effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://dart.dev/guides/language/effective-dart)
 
 
@@ -13,17 +13,13 @@
 A facebook like reaction built on top of package <a href='https://pub.dev/packages/lottie'>lottie</a>.
 Beautiful and clean looking widget similar to facebook reaction button.
 
-
-
-
 <br>
-
-
-
 
 <img src="misc/xen-emojify.gif">
 
-<a href="https://www.buymeacoffee.com/kiranpaudel1892"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&amp;emoji=🍺&amp;slug=kiranpaudel1892&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff"></a>
+<br>
+
+<a href="https://www.buymeacoffee.com/kiranpaudel1892" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 
 
@@ -39,8 +35,6 @@ Beautiful and clean looking widget similar to facebook reaction button.
 ## License
 
 ```
-MIT License
-
 Copyright (c) 2024 Kiran Paudel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
