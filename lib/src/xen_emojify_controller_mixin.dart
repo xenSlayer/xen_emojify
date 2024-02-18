@@ -12,7 +12,7 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
   XenEmoji? currentEmoji;
 
   ///
-  late OverlayPortalController dockController;
+  late final OverlayPortalController dockController;
 
   ///
   void initialize() {
@@ -36,10 +36,7 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
 
   /// Set the current emoji
   void setCurrentEmoji(XenEmoji emojiData) {
-    setState(() {
-      currentEmoji = emojiData;
-      print('set emoji');
-    });
+    setState(() => currentEmoji = emojiData);
     dockController.hide();
   }
 }

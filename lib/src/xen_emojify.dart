@@ -51,10 +51,7 @@ class _XenEmojifyState extends State<XenEmojify>
   @override
   void initState() {
     super.initState();
-    initializeAnimationControllers(
-      this,
-      widget.xenEmojis.length,
-    );
+    initializeAnimationControllers(this, widget.xenEmojis.length);
     initialize();
   }
 
@@ -80,7 +77,7 @@ class _XenEmojifyState extends State<XenEmojify>
               const XenEmojifyDock(),
               ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => LottieSource.lottieBuilder(
+                itemBuilder: (context, index) => LottieSource.build(
                   widget.lottieSource,
                   widget.xenEmojis[index].lottie,
                 ),
@@ -107,10 +104,11 @@ class _XenEmojifyState extends State<XenEmojify>
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: LottieBuilder(
-                    height: 30,
-                    width: 30,
-                    lottie: NetworkLottie(
-                        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json')),
+                  height: 30,
+                  width: 30,
+                  lottie: NetworkLottie(
+                      'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json'),
+                ),
               ),
             ),
           ),
