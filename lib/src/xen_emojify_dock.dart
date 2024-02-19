@@ -1,7 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
-import 'package:xen_emojify/src/enums.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 ///

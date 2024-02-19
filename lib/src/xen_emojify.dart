@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:xen_emojify/src/enums.dart';
+import 'package:xen_emojify/src/mixin/xen_emojify_animation_mixin.dart';
+import 'package:xen_emojify/src/mixin/xen_emojify_controller_mixin.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
-import 'package:xen_emojify/src/xen_emojify_animation_mixin.dart';
-import 'package:xen_emojify/src/xen_emojify_controller_mixin.dart';
 import 'package:xen_emojify/src/xen_emojify_dock.dart';
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
 
@@ -101,8 +101,8 @@ class _XenEmojifyState extends State<XenEmojify>
           controller: dockController,
           overlayChildBuilder: (context) {
             return CompositedTransformFollower(
-              offset: dockPosition(),
               link: xenEmojifyLayerLink,
+              offset: dockPosition(),
               child: widget.xenEmojifyDock,
             );
           },
@@ -114,12 +114,20 @@ class _XenEmojifyState extends State<XenEmojify>
               onTap: toggleDock,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: LottieBuilder(
-                  height: 30,
-                  width: 30,
-                  lottie: NetworkLottie(
-                    'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
-                  ),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    LottieBuilder(
+                      height: 30,
+                      width: 30,
+                      repeat: false,
+                      lottie: NetworkLottie(
+                        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('EMOJI')
+                  ],
                 ),
               ),
             ),

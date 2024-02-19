@@ -37,7 +37,10 @@ dependencies:
     xen_emojify: {latest_version}
 ```
 
+## FREE LOTTIES
 
+1. <a href="https://googlefonts.github.io/noto-emoji-animation/"> **Noto Animated Emoji** </a>
+2. <a href="https://iconscout.com/lottie-animations">**IconScout**</a>
 ****
 ## Example Usage
 
