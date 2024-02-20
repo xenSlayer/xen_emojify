@@ -42,35 +42,65 @@ dependencies:
 1. <a href="https://googlefonts.github.io/noto-emoji-animation/"> **Noto Animated Emoji** </a>
 2. <a href="https://iconscout.com/lottie-animations">**IconScout**</a>
 ****
+
+## Import the xen_emojify package
+
+```
+import 'package:xen_emojify/xen_emojify.dart';
+```
+<hr>
+
 ## Example Usage
 
 ```
-coming soon...
+import 'package:flutter/material.dart';
+import 'package:xen_emojify/xen_emojify.dart';
 
-```
+class XenEmojifyExample extends StatelessWidget {
+  const XenEmojifyExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final lottie = [
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
+        lottieName: 'heart_eyes',
+        lottieID: '1f60d',
+      ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
+        lottieName: 'laughing',
+        lottieID: '1f606',
+      ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/lottie.json',
+        lottieName: 'sunglasses',
+        lottieID: '1f60e',
+      ),
+    ];
+
+    return Scaffold(
+      body: ListView(
+        children: [
+          const Text('abc'),
+          const Text('abc'),
+          const Text('abc'),
+          Center(
+            child: XenEmojify(
+              lottieSource: LottieSource.network,
+              selectedEmojiSize: 10,
+              xenEmojifyDock: XenEmojifyDock(
+                xenEmojis: lottie,
+                onEmojiSelect: print,
+              ),
+              initialEmoji: lottie[1],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 
-
-## License
-
-```
-Copyright (c) 2024 Kiran Paudel
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ```
