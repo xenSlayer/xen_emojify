@@ -51,13 +51,3 @@ enum LottieSource {
     };
   }
 }
-
-/// State of the dock
-enum XenDockStates {
-  /// Dock is visible
-  mounted,
-
-  /// Dock is hidden
-  hidden,
-  ;
-}

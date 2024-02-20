@@ -65,7 +65,7 @@ class XenEmojifyExample extends StatelessWidget {
     final lottie = [
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-        lottieName: 'heart_eyes',
+        lottieName: 'heart',
         lottieID: '1f60d',
       ),
       const XenEmoji(

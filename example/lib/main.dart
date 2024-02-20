@@ -54,7 +54,7 @@ class XenEmojifyExample extends StatelessWidget {
                 xenEmojis: lottie,
                 onEmojiSelect: print,
               ),
-              initialEmoji: lottie[1],
+              initialEmoji: lottie[2],
             ),
           ),
         ],

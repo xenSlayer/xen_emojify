@@ -1,22 +1,18 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-///
-mixin XenEmojifyAnimationMixin<T extends StatefulWidget> on State<T> {
-  ///
+mixin XenEmojifyAnimationMixin {
   late final List<AnimationController> zoomControllers;
 
-  ///
   late final List<Animation<double>> zoomAnimations;
 
-  ///
   late final AnimationController selectedEmojiController;
 
-  ///
   late final Animation<double> selectedEmojiAnimation;
 
-  ///
   void animateSelectedEmoji() {
     selectedEmojiAnimation = CurvedAnimation(
       parent: selectedEmojiController,
@@ -39,7 +35,6 @@ mixin XenEmojifyAnimationMixin<T extends StatefulWidget> on State<T> {
     );
   }
 
-  ///
   void initializeAnimationControllers(TickerProvider vsync, int emojiCount) {
     zoomControllers = List.generate(emojiCount, (index) {
       return AnimationController(
@@ -58,7 +53,6 @@ mixin XenEmojifyAnimationMixin<T extends StatefulWidget> on State<T> {
     );
   }
 
-  ///
   void disposeAnimationControllers() {
     for (final controller in zoomControllers) {
       controller.dispose();

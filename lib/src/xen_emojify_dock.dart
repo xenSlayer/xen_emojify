@@ -1,7 +1,7 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
-import 'package:xen_emojify/src/mixin/xen_emojify_animation_mixin.dart';
+import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// The dock that displays list of [XenEmoji].

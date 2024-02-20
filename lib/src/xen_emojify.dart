@@ -2,12 +2,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:xen_emojify/src/enums.dart';
-import 'package:xen_emojify/src/mixin/xen_emojify_animation_mixin.dart';
-import 'package:xen_emojify/src/mixin/xen_emojify_controller_mixin.dart';
-import 'package:xen_emojify/src/xen_emoji.dart';
-import 'package:xen_emojify/src/xen_emojify_dock.dart';
+import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
+import 'package:xen_emojify/src/mixin/_xen_emojify_controller_mixin.dart';
+
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
+import 'package:xen_emojify/xen_emojify.dart';
 
 /// The widget that allows you to display emojis.
 ///
@@ -20,6 +19,7 @@ class XenEmojify extends StatefulWidget {
     required this.xenEmojifyDock,
     this.initialEmoji,
     this.lottieSource = LottieSource.network,
+    this.lottieLoadErrorBuilder = const LottieLoadErrorBuilder(),
     this.selectedEmojiSize = 40,
     this.emojifyWidget,
   });
@@ -38,6 +38,11 @@ class XenEmojify extends StatefulWidget {
 
   /// The initial widget to be displayed.
   final EmojifyWidget? emojifyWidget;
+
+  /// The builder to be displayed when lottie file fails to load.
+  ///
+  /// If not provided, the default [LottieLoadErrorBuilder] will be displayed.
+  final Widget lottieLoadErrorBuilder;
 
   @override
   State<XenEmojify> createState() => _XenEmojifyState();
@@ -58,6 +63,7 @@ class _XenEmojifyState extends State<XenEmojify>
   void initState() {
     super.initState();
     initialize();
+    setState(() => currentEmoji = widget.initialEmoji);
     selectedEmojiController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 650),
@@ -109,11 +115,7 @@ class _XenEmojifyState extends State<XenEmojify>
             return CompositedTransformFollower(
               link: xenEmojifyLayerLink,
               offset: dockPosition(),
-              child: Stack(
-                children: [
-                  widget.xenEmojifyDock,
-                ],
-              ),
+              child: Stack(children: [widget.xenEmojifyDock]),
             );
           },
           child: CompositedTransformTarget(
@@ -124,38 +126,27 @@ class _XenEmojifyState extends State<XenEmojify>
               onTap: showDock,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    _emojiBuilder(widget.initialEmoji ?? currentEmoji!,
-                        widget.emojifyWidget, widget.selectedEmojiSize),
-                    const SizedBox(width: 8),
-                    const Text('EMOJI')
-                  ],
-                ),
+                child: currentEmoji == null
+                    ? widget.emojifyWidget ?? EmojifyWidget()
+                    : Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          LottieSource.build(
+                            src: widget.lottieSource,
+                            url: currentEmoji!.lottie,
+                            height: 30,
+                            width: 30,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(currentEmoji!.lottieName!)
+                        ],
+                      ),
               ),
             ),
           ),
         ),
       ],
     );
-  }
-
-  Widget _emojiBuilder(
-      XenEmoji? emoji, EmojifyWidget? emojifyWidget, double? size) {
-    if (emoji != null) {
-      return SizedBox(
-        width: 30,
-        height: 30,
-        child: LottieSource.build(
-          src: emoji.lottieSource ?? widget.lottieSource,
-          url: emoji.lottie,
-          height: size,
-          width: size,
-        ),
-      );
-    }
-    return emojifyWidget ?? EmojifyWidget();
   }
 }
 
