@@ -53,16 +53,19 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget.xenEmojis.length,
-        itemBuilder: (context, index) => InkWell(
-          onTap: () {
-            setState(() => currentEmoji = widget.xenEmojis[index]);
-            widget.onEmojiSelect?.call(widget.xenEmojis[index]);
-          },
-          child: LottieSource.build(
-            src: LottieSource.network,
-            url: widget.xenEmojis[index].lottie,
-            height: 30,
-            width: 30,
+        itemBuilder: (context, index) => Tooltip(
+          message: widget.xenEmojis[index].lottieName,
+          child: Listener(
+            onPointerDown: (_) {
+              setState(() => currentEmoji = widget.xenEmojis[index]);
+              widget.onEmojiSelect?.call(widget.xenEmojis[index]);
+            },
+            child: LottieSource.build(
+              src: LottieSource.network,
+              url: widget.xenEmojis[index].lottie,
+              height: 30,
+              width: 30,
+            ),
           ),
         ),
       ),

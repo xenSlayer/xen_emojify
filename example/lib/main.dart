@@ -25,7 +25,7 @@ class XenEmojifyExample extends StatelessWidget {
     final lottie = [
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-        lottieName: 'heart_eyes',
+        lottieName: 'heart eyes',
         lottieID: '1f60d',
       ),
       const XenEmoji(
@@ -38,14 +38,26 @@ class XenEmojifyExample extends StatelessWidget {
         lottieName: 'sunglasses',
         lottieID: '1f60e',
       ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60f/lottie.json',
+        lottieName: 'smirk',
+        lottieID: '1f60f',
+      ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f602/lottie.json',
+        lottieName: 'joy',
+        lottieID: '1f602',
+      ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f603/lottie.json',
+        lottieName: 'smile',
+        lottieID: '1f603',
+      ),
     ];
 
     return Scaffold(
       body: ListView(
         children: [
-          const Text('abc'),
-          const Text('abc'),
-          const Text('abc'),
           Center(
             child: XenEmojify(
               lottieSource: LottieSource.network,
