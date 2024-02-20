@@ -20,6 +20,7 @@ class XenEmojify extends StatefulWidget {
     this.initialEmoji,
     this.lottieSource = LottieSource.network,
     this.lottieLoadErrorBuilder = const LottieLoadErrorBuilder(),
+    this.showSelectedEmojiName = true,
     this.selectedEmojiSize = 40,
     this.emojifyWidget,
     this.selectedEmojiTextStyle = const TextStyle(
@@ -41,6 +42,12 @@ class XenEmojify extends StatefulWidget {
   ///
   /// If not provided, the default [LottieLoadErrorBuilder] will be displayed.
   final Widget lottieLoadErrorBuilder;
+
+  /// Whether to show the name of the selected emoji.
+  /// If true, the name of the selected emoji will be displayed.
+  ///
+  /// Defaults to true.
+  final bool showSelectedEmojiName;
 
   /// The size of the selected emoji.
   final double selectedEmojiSize;
@@ -71,33 +78,11 @@ class _XenEmojifyState extends State<XenEmojify>
   void initState() {
     super.initState();
     initialize();
+    initializeAnimationControllers(
+      this,
+      widget.xenEmojifyDock.xenEmojis.length,
+    );
     setState(() => currentEmoji = widget.initialEmoji);
-    selectedEmojiController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 650),
-    );
-
-    selectedEmojiAnimation = CurvedAnimation(
-      parent: selectedEmojiController,
-      curve: Curves.easeInOutCubic,
-    ).drive(
-      TweenSequence<double>(
-        [
-          TweenSequenceItem(
-            tween: Tween<double>(begin: 0.2, end: 1.2),
-            weight: 2,
-          ),
-          TweenSequenceItem(
-            tween: Tween<double>(begin: 1.2, end: 4),
-            weight: 8,
-          ),
-          TweenSequenceItem(
-            tween: Tween<double>(begin: 4, end: 1.2),
-            weight: 1,
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -108,55 +93,47 @@ class _XenEmojifyState extends State<XenEmojify>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox.fromSize(
-          size: size,
-          child: GestureDetector(onTap: hideDock),
-        ),
-        OverlayPortal(
-          controller: dockController,
-          overlayChildBuilder: (context) {
-            return CompositedTransformFollower(
-              link: xenEmojifyLayerLink,
-              offset: dockPosition(widget.xenEmojifyDock),
-              child: Stack(children: [widget.xenEmojifyDock]),
-            );
-          },
-          child: CompositedTransformTarget(
-            link: xenEmojifyLayerLink,
-            child: InkWell(
-              highlightColor: Colors.amber,
-              borderRadius: BorderRadius.circular(32),
-              onTap: showDock,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: currentEmoji == null
-                    ? widget.emojifyWidget ?? EmojifyWidget()
-                    : Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          LottieSource.build(
-                            src: widget.lottieSource,
-                            url: currentEmoji!.lottie,
-                            height: 30,
-                            width: 30,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
+    return OverlayPortal(
+      controller: dockController,
+      overlayChildBuilder: (context) {
+        return CompositedTransformFollower(
+          link: xenEmojifyLayerLink,
+          offset: dockPosition(widget.xenEmojifyDock),
+          child: Stack(children: [widget.xenEmojifyDock]),
+        );
+      },
+      child: CompositedTransformTarget(
+        link: xenEmojifyLayerLink,
+        child: InkWell(
+          highlightColor: Colors.amber,
+          borderRadius: BorderRadius.circular(32),
+          onTap: toggleDock,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: currentEmoji == null
+                ? widget.emojifyWidget ?? EmojifyWidget()
+                : Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      LottieSource.build(
+                        src: widget.lottieSource,
+                        url: currentEmoji!.lottie,
+                        height: 30,
+                        width: 30,
+                      ),
+                      if (widget.showSelectedEmojiName)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
                             currentEmoji!.lottieName!,
                             style: widget.selectedEmojiTextStyle,
-                          )
-                        ],
-                      ),
-              ),
-            ),
+                          ),
+                        )
+                    ],
+                  ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

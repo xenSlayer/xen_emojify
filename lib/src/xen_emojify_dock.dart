@@ -14,6 +14,7 @@ class XenEmojifyDock extends StatefulWidget {
     required this.xenEmojis,
     this.dockColor = const Color.fromARGB(200, 37, 17, 17),
     this.dockSize = const Size(500, 80),
+    this.offSet,
     this.onEmojiSelect,
   });
 
@@ -30,6 +31,10 @@ class XenEmojifyDock extends StatefulWidget {
   /// default: [Size(500, 80)]
   final Size dockSize;
 
+  /// The offset of the dock.
+  ///
+  final Offset? offSet;
+
   /// The callback function that is called when an emoji is selected.
   ///
   /// The selected [XenEmoji] is received as a parameter.
@@ -41,6 +46,12 @@ class XenEmojifyDock extends StatefulWidget {
 
 class _XenEmojifyDockState extends State<XenEmojifyDock>
     with XenEmojifyAnimationMixin, XenEmojifyControllerMixin {
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,10 +66,11 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
         itemCount: widget.xenEmojis.length,
         itemBuilder: (context, index) => Tooltip(
           message: widget.xenEmojis[index].lottieName,
-          child: Listener(
-            onPointerDown: (_) {
+          child: InkWell(
+            onTap: () {
               setState(() => currentEmoji = widget.xenEmojis[index]);
               widget.onEmojiSelect?.call(widget.xenEmojis[index]);
+              hideDock();
             },
             child: LottieSource.build(
               src: LottieSource.network,

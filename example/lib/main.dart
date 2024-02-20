@@ -56,17 +56,67 @@ class XenEmojifyExample extends StatelessWidget {
     ];
 
     return Scaffold(
-      body: ListView(
-        children: [
-          Center(
-            child: XenEmojify(
-              lottieSource: LottieSource.network,
-              selectedEmojiSize: 10,
-              xenEmojifyDock: XenEmojifyDock(xenEmojis: lottie),
-              initialEmoji: lottie[2],
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSc4bnfG3zNmNB6Dk4C3vge8FxKkdFH64E96jiW8FKdS_04gDdF',
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 5,
+              children: [
+                XenEmojify(
+                  lottieSource: LottieSource.network,
+                  selectedEmojiSize: 10,
+                  xenEmojifyDock: XenEmojifyDock(xenEmojis: lottie),
+                  // initialEmoji: lottie[2],
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Wrap(
+                      children: [
+                        Icon(Icons.comment),
+                        SizedBox(width: 5),
+                        Text('Comment'),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Wrap(
+                      children: [
+                        Icon(Icons.share_rounded),
+                        SizedBox(width: 5),
+                        Text('Share'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

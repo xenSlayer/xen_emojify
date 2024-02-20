@@ -26,17 +26,21 @@ mixin XenEmojifyControllerMixin<T extends StatefulWidget> on State<T> {
   }
 
   void showDock() {
-    setState(() {
-      dockState = XenDockStates.mounted;
-    });
     dockController.show();
+    setState(() => dockState = XenDockStates.mounted);
   }
 
   void hideDock() {
-    setState(() {
-      dockState = XenDockStates.hidden;
-    });
     dockController.hide();
+    setState(() => dockState = XenDockStates.hidden);
+  }
+
+  void toggleDock() {
+    if (dockState == XenDockStates.mounted) {
+      hideDock();
+    } else {
+      showDock();
+    }
   }
 
   void setCurrentEmoji(XenEmoji emojiData) {
