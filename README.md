@@ -7,7 +7,7 @@
 
 ⚠️BEFORE STARTING READ:<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE"> **LOTTIE LICENSE** </a>
 
-<hr>
+****
 
 <br>
 
@@ -30,6 +30,12 @@ Whether you're developing a social media platform, a content-sharing app, or any
 
 <a href="https://www.buymeacoffee.com/kiranpaudel1892" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
+## FREE LOTTIES
+
+1. <a href="https://googlefonts.github.io/noto-emoji-animation/"> **Noto Animated Emoji** </a>
+2. <a href="https://iconscout.com/lottie-animations">**IconScout**</a>
+
+
 ## Getting started
 In your pubspec.yaml file, add the following dependency:
 ```
@@ -37,11 +43,6 @@ dependencies:
     xen_emojify: {latest_version}
 ```
 
-## FREE LOTTIES
-
-1. <a href="https://googlefonts.github.io/noto-emoji-animation/"> **Noto Animated Emoji** </a>
-2. <a href="https://iconscout.com/lottie-animations">**IconScout**</a>
-****
 
 ## Import the xen_emojify package
 
