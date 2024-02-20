@@ -83,9 +83,6 @@ class XenEmojifyExample extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: [
-          const Text('abc'),
-          const Text('abc'),
-          const Text('abc'),
           Center(
             child: XenEmojify(
               lottieSource: LottieSource.network,
@@ -102,6 +99,5 @@ class XenEmojifyExample extends StatelessWidget {
     );
   }
 }
-
 
 ```
