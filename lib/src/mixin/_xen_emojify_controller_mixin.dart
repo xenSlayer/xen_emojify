@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/enums/enums.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
-mixin XenEmojifyControllerMixin on State<XenEmojify> {
+mixin XenEmojifyControllerMixin<T extends StatefulWidget> on State<T> {
   late final LayerLink xenEmojifyLayerLink;
 
   XenEmoji? currentEmoji;
@@ -20,8 +20,8 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
     dockController = OverlayPortalController();
   }
 
-  Offset dockPosition() {
-    final dockSize = widget.xenEmojifyDock.dockSize;
+  Offset dockPosition(XenEmojifyDock dock) {
+    final dockSize = dock.dockSize;
     return Offset(-dockSize.width / 2.5, -dockSize.height);
   }
 

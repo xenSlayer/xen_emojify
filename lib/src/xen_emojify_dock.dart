@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
+import 'package:xen_emojify/src/mixin/_xen_emojify_controller_mixin.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// The dock that displays list of [XenEmoji].
@@ -39,7 +40,7 @@ class XenEmojifyDock extends StatefulWidget {
 }
 
 class _XenEmojifyDockState extends State<XenEmojifyDock>
-    with XenEmojifyAnimationMixin {
+    with XenEmojifyAnimationMixin, XenEmojifyControllerMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +54,10 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
         scrollDirection: Axis.horizontal,
         itemCount: widget.xenEmojis.length,
         itemBuilder: (context, index) => InkWell(
-          onTap: () => widget.onEmojiSelect?.call(widget.xenEmojis[index]),
+          onTap: () {
+            setState(() => currentEmoji = widget.xenEmojis[index]);
+            widget.onEmojiSelect?.call(widget.xenEmojis[index]);
+          },
           child: LottieSource.build(
             src: LottieSource.network,
             url: widget.xenEmojis[index].lottie,

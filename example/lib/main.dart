@@ -50,10 +50,7 @@ class XenEmojifyExample extends StatelessWidget {
             child: XenEmojify(
               lottieSource: LottieSource.network,
               selectedEmojiSize: 10,
-              xenEmojifyDock: XenEmojifyDock(
-                xenEmojis: lottie,
-                onEmojiSelect: print,
-              ),
+              xenEmojifyDock: XenEmojifyDock(xenEmojis: lottie),
               initialEmoji: lottie[2],
             ),
           ),

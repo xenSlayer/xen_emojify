@@ -22,6 +22,10 @@ class XenEmojify extends StatefulWidget {
     this.lottieLoadErrorBuilder = const LottieLoadErrorBuilder(),
     this.selectedEmojiSize = 40,
     this.emojifyWidget,
+    this.selectedEmojiTextStyle = const TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.w800,
+    ),
   });
 
   /// The dock that displays list of [XenEmoji].
@@ -33,16 +37,20 @@ class XenEmojify extends StatefulWidget {
   /// The source of the lottie file.
   final LottieSource lottieSource;
 
+  /// The builder to be displayed when lottie file fails to load.
+  ///
+  /// If not provided, the default [LottieLoadErrorBuilder] will be displayed.
+  final Widget lottieLoadErrorBuilder;
+
   /// The size of the selected emoji.
   final double selectedEmojiSize;
 
   /// The initial widget to be displayed.
   final EmojifyWidget? emojifyWidget;
 
-  /// The builder to be displayed when lottie file fails to load.
+  /// The text style of the selected emoji.
   ///
-  /// If not provided, the default [LottieLoadErrorBuilder] will be displayed.
-  final Widget lottieLoadErrorBuilder;
+  final TextStyle selectedEmojiTextStyle;
 
   @override
   State<XenEmojify> createState() => _XenEmojifyState();
@@ -114,7 +122,7 @@ class _XenEmojifyState extends State<XenEmojify>
           overlayChildBuilder: (context) {
             return CompositedTransformFollower(
               link: xenEmojifyLayerLink,
-              offset: dockPosition(),
+              offset: dockPosition(widget.xenEmojifyDock),
               child: Stack(children: [widget.xenEmojifyDock]),
             );
           },
@@ -138,7 +146,10 @@ class _XenEmojifyState extends State<XenEmojify>
                             width: 30,
                           ),
                           const SizedBox(width: 8),
-                          Text(currentEmoji!.lottieName!)
+                          Text(
+                            currentEmoji!.lottieName!,
+                            style: widget.selectedEmojiTextStyle,
+                          )
                         ],
                       ),
               ),
