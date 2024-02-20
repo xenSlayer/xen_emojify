@@ -9,9 +9,13 @@ import 'package:xen_emojify/src/xen_emoji.dart';
 import 'package:xen_emojify/src/xen_emojify_dock.dart';
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
 
+/// The widget that allows you to display emojis.
 ///
+/// The [XenEmojify] widget is the main widget that allows you to display emojis.
+/// If initialEmoji is not provided, the widget will display the default
+/// [EmojifyWidget], unless you provide a custom [EmojifyWidget].
 class XenEmojify extends StatefulWidget {
-  /// [XenEmojify] is a widget that allows you to display emojis.
+  ///
   const XenEmojify({
     required this.xenEmojifyDock,
     this.initialEmoji,
@@ -20,10 +24,10 @@ class XenEmojify extends StatefulWidget {
     this.emojifyWidget,
   });
 
-  ///
+  /// The dock that displays list of [XenEmoji].
   final XenEmojifyDock xenEmojifyDock;
 
-  ///
+  /// The initial emoji to be displayed.
   final XenEmoji? initialEmoji;
 
   /// The source of the lottie file.

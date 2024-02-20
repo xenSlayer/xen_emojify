@@ -1,10 +1,9 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
-import 'package:xen_emojify/src/xen_emojify.dart';
 
 ///
-mixin XenEmojifyAnimationMixin on State<XenEmojify> {
+mixin XenEmojifyAnimationMixin<T extends StatefulWidget> on State<T> {
   ///
   late final List<AnimationController> zoomControllers;
 

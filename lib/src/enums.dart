@@ -10,13 +10,19 @@ enum LottieSource {
   /// Lottie source from network
   network,
 
-  /// Lottie source from file
+  /// Lottie source from file.
   file,
   ;
 
   const LottieSource();
 
+  /// Builds a [LottieBuilder] based on the [LottieSource].
   ///
+  /// The [url] is the path to the lottie file.
+  ///
+  /// The [height] and [width] are the dimensions of the lottie.
+  ///
+  /// The [repeat] is the repeat mode of the lottie.
   static LottieBuilder build({
     required LottieSource src,
     required String url,
@@ -46,7 +52,7 @@ enum LottieSource {
   }
 }
 
-///
+/// State of the dock
 enum XenDockStates {
   /// Dock is visible
   mounted,

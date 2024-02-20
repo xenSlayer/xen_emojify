@@ -1,11 +1,14 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
+import 'package:xen_emojify/src/mixin/xen_emojify_animation_mixin.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
-///
+/// The dock that displays list of [XenEmoji].
+/// This widget pops up when the user taps on the [XenEmojify] widget.
+/// The user can select an [XenEmoji] from the dock.
 class XenEmojifyDock extends StatefulWidget {
-  /// [XenEmojifyDock] is a widget that allows you to display emojis
+  ///
   const XenEmojifyDock({
     required this.xenEmojis,
     this.dockColor = const Color.fromARGB(200, 37, 17, 17),
@@ -13,26 +16,30 @@ class XenEmojifyDock extends StatefulWidget {
     this.onEmojiSelect,
   });
 
-  ///
+  /// The list of [XenEmoji] to display in the dock.
   final List<XenEmoji> xenEmojis;
 
-  /// The color of the dock
+  /// The background color of the dock.
+  ///
   /// default: [Colors.grey]
   final Color dockColor;
 
   /// The size of the dock
   ///
-  /// default: [Size(300, 200)]
+  /// default: [Size(500, 80)]
   final Size dockSize;
 
+  /// The callback function that is called when an emoji is selected.
   ///
+  /// The selected [XenEmoji] is received as a parameter.
   final void Function(XenEmoji emoji)? onEmojiSelect;
 
   @override
   State<XenEmojifyDock> createState() => _XenEmojifyDockState();
 }
 
-class _XenEmojifyDockState extends State<XenEmojifyDock> {
+class _XenEmojifyDockState extends State<XenEmojifyDock>
+    with XenEmojifyAnimationMixin {
   @override
   Widget build(BuildContext context) {
     return Container(

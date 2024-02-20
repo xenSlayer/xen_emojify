@@ -25,18 +25,18 @@ class XenEmojifyExample extends StatelessWidget {
     final lottie = [
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-        emojiName: 'heart_eyes',
-        emojiID: '1f60d',
+        lottieName: 'heart_eyes',
+        lottieID: '1f60d',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
-        emojiName: 'laughing',
-        emojiID: '1f606',
+        lottieName: 'laughing',
+        lottieID: '1f606',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/lottie.json',
-        emojiName: 'sunglasses',
-        emojiID: '1f60e',
+        lottieName: 'sunglasses',
+        lottieID: '1f60e',
       ),
     ];
 
