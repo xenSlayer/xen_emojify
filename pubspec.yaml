@@ -1,5 +1,5 @@
 name: xen_emojify
-description: "Facebook like reaction widget, based on lottie flutter package."
+description: "xen_emojify is a versatile Flutter package designed to enhance user interaction by providing a rich and engaging way to display Facebook-like reactions within your app."
 version: 0.0.1
 homepage: https://github.com/xenSlayer/xen_emojify
 
