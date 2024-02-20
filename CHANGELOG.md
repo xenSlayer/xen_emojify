@@ -1,3 +1,3 @@
 ## 0.0.1
 
-* 🎉 initial release.
+* 🎉 xen_emojify initial release.

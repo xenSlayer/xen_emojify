@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 ///
-class XenEmojifyDock extends StatelessWidget {
+class XenEmojifyDock extends StatefulWidget {
   /// [XenEmojifyDock] is a widget that allows you to display emojis
   const XenEmojifyDock({
     required this.xenEmojis,
     this.dockColor = const Color.fromARGB(200, 37, 17, 17),
     this.dockSize = const Size(500, 80),
+    this.onEmojiSelect,
   });
 
   ///
@@ -24,21 +25,31 @@ class XenEmojifyDock extends StatelessWidget {
   /// default: [Size(300, 200)]
   final Size dockSize;
 
+  ///
+  final void Function(XenEmoji emoji)? onEmojiSelect;
+
+  @override
+  State<XenEmojifyDock> createState() => _XenEmojifyDockState();
+}
+
+class _XenEmojifyDockState extends State<XenEmojifyDock> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: dockSize,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: dockColor,
-          borderRadius: const BorderRadius.all(Radius.circular(32)),
-        ),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: xenEmojis.length,
-          itemBuilder: (context, index) => LottieSource.build(
+    return Container(
+      height: widget.dockSize.height,
+      width: widget.dockSize.width,
+      decoration: BoxDecoration(
+        color: widget.dockColor,
+        borderRadius: const BorderRadius.all(Radius.circular(32)),
+      ),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.xenEmojis.length,
+        itemBuilder: (context, index) => InkWell(
+          onTap: () => widget.onEmojiSelect?.call(widget.xenEmojis[index]),
+          child: LottieSource.build(
             src: LottieSource.network,
-            url: xenEmojis[index].lottie,
+            url: widget.xenEmojis[index].lottie,
             height: 30,
             width: 30,
           ),

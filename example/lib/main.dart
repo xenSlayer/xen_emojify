@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,28 +22,39 @@ class XenEmojifyExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lottie = [
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
+        emojiName: 'heart_eyes',
+        emojiID: '1f60d',
+      ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
+        emojiName: 'laughing',
+        emojiID: '1f606',
+      ),
+      const XenEmoji(
+        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/lottie.json',
+        emojiName: 'sunglasses',
+        emojiID: '1f60e',
+      ),
+    ];
+
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
+          const Text('abc'),
+          const Text('abc'),
+          const Text('abc'),
           Center(
             child: XenEmojify(
               lottieSource: LottieSource.network,
+              selectedEmojiSize: 10,
               xenEmojifyDock: XenEmojifyDock(
-                xenEmojis: [
-                  for (int i = 0; i < 3; i++)
-                    const XenEmoji(
-                      lottie:
-                          'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-                    ),
-                  const XenEmoji(
-                    lottie:
-                        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
-                  ),
-                ],
+                xenEmojis: lottie,
+                onEmojiSelect: print,
               ),
-              onEmojiSelect: print,
+              initialEmoji: lottie[1],
             ),
           ),
         ],

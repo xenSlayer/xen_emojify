@@ -1,9 +1,16 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
+import 'package:xen_emojify/xen_emojify.dart';
+
 ///
 class XenEmoji {
   ///
-  const XenEmoji({required this.lottie, this.emojiName, this.emojiID});
+  const XenEmoji(
+    this.lottie, {
+    this.emojiName,
+    this.emojiID,
+    this.lottieSource,
+  });
 
   ///
   final String lottie;
@@ -13,4 +20,12 @@ class XenEmoji {
 
   ///
   final String? emojiID;
+
+  ///
+  final LottieSource? lottieSource;
+
+  @override
+  String toString() {
+    return 'XenEmoji(lottie: $lottie, emojiName: $emojiName, emojiID: $emojiID, lottieSource: $lottieSource)';
+  }
 }

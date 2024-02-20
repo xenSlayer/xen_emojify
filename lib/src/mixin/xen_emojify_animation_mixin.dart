@@ -1,5 +1,4 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
-// Define a mixin for commonly used animation behaviors
 
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/xen_emojify.dart';
@@ -19,7 +18,6 @@ mixin XenEmojifyAnimationMixin on State<XenEmojify> {
   late final Animation<double> selectedEmojiAnimation;
 
   ///
-
   void animateSelectedEmoji() {
     selectedEmojiAnimation = CurvedAnimation(
       parent: selectedEmojiController,

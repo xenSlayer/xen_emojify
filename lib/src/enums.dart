@@ -28,16 +28,19 @@ enum LottieSource {
           url,
           height: height,
           width: width,
+          repeat: false,
         ),
       LottieSource.network => LottieBuilder.network(
           url,
           height: height,
           width: width,
+          repeat: false,
         ),
       LottieSource.file => LottieBuilder.file(
           url,
           height: height,
           width: width,
+          repeat: false,
         ),
     };
   }

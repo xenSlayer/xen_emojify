@@ -5,7 +5,7 @@ import 'package:xen_emojify/src/enums.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// A mixin for commonly used calculator behaviors
-mixin XenEmojifyControllerMixin on State<XenEmojify> {
+mixin XenEmojifyControllerMixin<T> on State<XenEmojify> {
   /// The layer link
   late final LayerLink xenEmojifyLayerLink;
 
@@ -27,15 +27,23 @@ mixin XenEmojifyControllerMixin on State<XenEmojify> {
   ///
   Offset dockPosition() {
     final dockSize = widget.xenEmojifyDock.dockSize;
-    return Offset(-dockSize.width / 2, -dockSize.height - 10);
+    return Offset(-dockSize.width / 2.5, -dockSize.height);
   }
 
-  /// Show the dock
-  void toggleDock() {
-    return switch (dockState) {
-      XenDockStates.mounted => dockController.hide(),
-      XenDockStates.hidden => dockController.show(),
-    };
+  ///
+  void showDock() {
+    setState(() {
+      dockState = XenDockStates.mounted;
+    });
+    dockController.show();
+  }
+
+  ///
+  void hideDock() {
+    setState(() {
+      dockState = XenDockStates.hidden;
+    });
+    dockController.hide();
   }
 
   /// Set the current emoji

@@ -1,6 +1,5 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 import 'package:flutter/material.dart';
-import 'package:xen_emojify/xen_emojify.dart';
 
 /// UNUSED
 ///
@@ -10,16 +9,10 @@ import 'package:xen_emojify/xen_emojify.dart';
 class EmojifyWidget extends StatelessWidget {
   ///
   EmojifyWidget({
-    required this.xenEmojifyDock,
     this.onTap,
     this.padding = const EdgeInsets.all(8.0),
     this.defaultWidget = const Icon(Icons.add_circle_outline_rounded),
   });
-
-  /// The dock to be displayed when tapped
-  ///
-  /// contains the list of emojis
-  final XenEmojifyDock xenEmojifyDock;
 
   /// Perform certain action when tapped
   ///

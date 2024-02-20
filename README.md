@@ -26,7 +26,7 @@ Whether you're developing a social media platform, a content-sharing app, or any
 2. Customizable size, color, and animation speed.
 3. Supports onTap callbacks for handling user interactions.
 
-
+<br>
 
 <a href="https://www.buymeacoffee.com/kiranpaudel1892" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
