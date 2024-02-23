@@ -47,12 +47,6 @@ class XenEmojifyDock extends StatefulWidget {
 class _XenEmojifyDockState extends State<XenEmojifyDock>
     with XenEmojifyAnimationMixin, XenEmojifyControllerMixin {
   @override
-  void initState() {
-    super.initState();
-    initialize();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       height: widget.dockSize.height,
@@ -68,9 +62,8 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
           message: widget.xenEmojis[index].lottieName,
           child: InkWell(
             onTap: () {
-              setState(() => currentEmoji = widget.xenEmojis[index]);
               widget.onEmojiSelect?.call(widget.xenEmojis[index]);
-              hideDock();
+              setCurrentEmoji(widget.xenEmojis[index]);
             },
             child: LottieSource.build(
               src: LottieSource.network,

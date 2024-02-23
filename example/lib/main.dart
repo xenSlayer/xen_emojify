@@ -85,7 +85,7 @@ class XenEmojifyExample extends StatelessWidget {
                   lottieSource: LottieSource.network,
                   selectedEmojiSize: 10,
                   xenEmojifyDock: XenEmojifyDock(xenEmojis: lottie),
-                  // initialEmoji: lottie[2],
+                  initialEmoji: lottie[2],
                 ),
                 InkWell(
                   onTap: () {},

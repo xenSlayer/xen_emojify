@@ -77,64 +77,72 @@ class _XenEmojifyState extends State<XenEmojify>
   @override
   void initState() {
     super.initState();
-    initialize();
+    initializeXenEmojifyControllers();
     initializeAnimationControllers(
       this,
       widget.xenEmojifyDock.xenEmojis.length,
     );
-    setState(() => currentEmoji = widget.initialEmoji);
+    if (widget.initialEmoji != null) {
+      currentEmojiStreamController.add(widget.initialEmoji!);
+    }
   }
 
   @override
   void dispose() {
+    disposeXenEmojifyControllers();
     disposeAnimationControllers();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return OverlayPortal(
-      controller: dockController,
-      overlayChildBuilder: (context) {
-        return CompositedTransformFollower(
-          link: xenEmojifyLayerLink,
-          offset: dockPosition(widget.xenEmojifyDock),
-          child: Stack(children: [widget.xenEmojifyDock]),
-        );
-      },
-      child: CompositedTransformTarget(
-        link: xenEmojifyLayerLink,
-        child: InkWell(
-          highlightColor: Colors.amber,
-          borderRadius: BorderRadius.circular(32),
-          onTap: toggleDock,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: currentEmoji == null
-                ? widget.emojifyWidget ?? EmojifyWidget()
-                : Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      LottieSource.build(
-                        src: widget.lottieSource,
-                        url: currentEmoji!.lottie,
-                        height: 30,
-                        width: 30,
-                      ),
-                      if (widget.showSelectedEmojiName)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            currentEmoji!.lottieName!,
-                            style: widget.selectedEmojiTextStyle,
-                          ),
-                        )
-                    ],
-                  ),
-          ),
-        ),
-      ),
-    );
+    return StreamBuilder<XenEmoji>(
+        stream: currentEmojiStreamController.stream,
+        builder: (context, snapshot) {
+          print('snapshot: ${snapshot.data}');
+          return OverlayPortal(
+            controller: dockController,
+            overlayChildBuilder: (context) {
+              return CompositedTransformFollower(
+                link: xenEmojifyLayerLink,
+                offset: dockPosition(widget.xenEmojifyDock),
+                child: Stack(children: [widget.xenEmojifyDock]),
+              );
+            },
+            child: CompositedTransformTarget(
+              link: xenEmojifyLayerLink,
+              child: InkWell(
+                highlightColor: Colors.amber,
+                borderRadius: BorderRadius.circular(32),
+                onTap: showDock,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: snapshot.data == null
+                      ? widget.emojifyWidget ?? EmojifyWidget()
+                      : Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            LottieSource.build(
+                              src: widget.lottieSource,
+                              url: snapshot.data!.lottie,
+                              height: 30,
+                              width: 30,
+                            ),
+                            if (widget.showSelectedEmojiName)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  snapshot.data!.lottieName!,
+                                  style: widget.selectedEmojiTextStyle,
+                                ),
+                              )
+                          ],
+                        ),
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
 

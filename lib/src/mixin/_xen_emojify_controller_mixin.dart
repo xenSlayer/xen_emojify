@@ -2,22 +2,25 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/enums/enums.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
-mixin XenEmojifyControllerMixin<T extends StatefulWidget> on State<T> {
+mixin XenEmojifyControllerMixin {
   late final LayerLink xenEmojifyLayerLink;
 
-  XenEmoji? currentEmoji;
+  late StreamController<XenEmoji> currentEmojiStreamController;
 
   XenDockStates dockState = XenDockStates.hidden;
 
   late final OverlayPortalController dockController;
 
-  void initialize() {
+  void initializeXenEmojifyControllers() {
     xenEmojifyLayerLink = LayerLink();
     dockController = OverlayPortalController();
+    currentEmojiStreamController = StreamController<XenEmoji>.broadcast();
   }
 
   Offset dockPosition(XenEmojifyDock dock) {
@@ -27,24 +30,26 @@ mixin XenEmojifyControllerMixin<T extends StatefulWidget> on State<T> {
 
   void showDock() {
     dockController.show();
-    setState(() => dockState = XenDockStates.mounted);
+  }
+
+  void disposeXenEmojifyControllers() {
+    currentEmojiStreamController.close();
   }
 
   void hideDock() {
     dockController.hide();
-    setState(() => dockState = XenDockStates.hidden);
   }
 
-  void toggleDock() {
-    if (dockState == XenDockStates.mounted) {
-      hideDock();
-    } else {
-      showDock();
-    }
-  }
+  // void toggleDock() {
+  //   if (dockState == XenDockStates.mounted) {
+  //     hideDock();
+  //   } else {
+  //     showDock();
+  //   }
+  // }
 
   void setCurrentEmoji(XenEmoji emojiData) {
-    setState(() => currentEmoji = emojiData);
+    currentEmojiStreamController.add(emojiData);
     dockController.hide();
   }
 }
