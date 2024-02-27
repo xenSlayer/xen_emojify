@@ -1,9 +1,12 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
 import 'package:xen_emojify/src/mixin/_xen_emojify_controller_mixin.dart';
+import 'package:xen_emojify/src/xen_emojify_state.dart';
 
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
 import 'package:xen_emojify/xen_emojify.dart';
@@ -50,6 +53,8 @@ class XenEmojify extends StatefulWidget {
   final bool showSelectedEmojiName;
 
   /// The size of the selected emoji.
+  ///
+  /// Defaults to 40.
   final double selectedEmojiSize;
 
   /// The initial widget to be displayed.
@@ -57,6 +62,10 @@ class XenEmojify extends StatefulWidget {
 
   /// The text style of the selected emoji.
   ///
+  /// Defaults to:
+  ///```
+  /// const TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+  /// ```
   final TextStyle selectedEmojiTextStyle;
 
   @override
@@ -74,6 +83,8 @@ class _XenEmojifyState extends State<XenEmojify>
   ///
   late final Animation<double> selectedEmojiAnimation;
 
+  final XenEmojifyState state = XenEmojifyState();
+
   @override
   void initState() {
     super.initState();
@@ -83,66 +94,64 @@ class _XenEmojifyState extends State<XenEmojify>
       widget.xenEmojifyDock.xenEmojis.length,
     );
     if (widget.initialEmoji != null) {
-      currentEmojiStreamController.add(widget.initialEmoji!);
+      state.setCurrentEmoji(widget.initialEmoji!);
     }
   }
 
   @override
   void dispose() {
-    disposeXenEmojifyControllers();
     disposeAnimationControllers();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<XenEmoji>(
-        stream: currentEmojiStreamController.stream,
-        builder: (context, snapshot) {
-          print('snapshot: ${snapshot.data}');
-          return OverlayPortal(
-            controller: dockController,
-            overlayChildBuilder: (context) {
-              return CompositedTransformFollower(
-                link: xenEmojifyLayerLink,
-                offset: dockPosition(widget.xenEmojifyDock),
-                child: Stack(children: [widget.xenEmojifyDock]),
-              );
-            },
-            child: CompositedTransformTarget(
-              link: xenEmojifyLayerLink,
-              child: InkWell(
-                highlightColor: Colors.amber,
-                borderRadius: BorderRadius.circular(32),
-                onTap: showDock,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: snapshot.data == null
-                      ? widget.emojifyWidget ?? EmojifyWidget()
-                      : Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            LottieSource.build(
-                              src: widget.lottieSource,
-                              url: snapshot.data!.lottie,
-                              height: 30,
-                              width: 30,
-                            ),
-                            if (widget.showSelectedEmojiName)
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  snapshot.data!.lottieName!,
-                                  style: widget.selectedEmojiTextStyle,
-                                ),
-                              )
-                          ],
-                        ),
-                ),
-              ),
-            ),
+    log(state.currentEmoji!.lottieName.toString());
+    return XenEmojifyStateProvider(
+      state: state,
+      child: OverlayPortal(
+        controller: dockController,
+        overlayChildBuilder: (context) {
+          return CompositedTransformFollower(
+            link: xenEmojifyLayerLink,
+            offset: dockPosition(widget.xenEmojifyDock),
+            child: Stack(children: [widget.xenEmojifyDock]),
           );
-        });
+        },
+        child: CompositedTransformTarget(
+          link: xenEmojifyLayerLink,
+          child: InkWell(
+            highlightColor: Colors.amber,
+            borderRadius: BorderRadius.circular(32),
+            onTap: showDock,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: state.currentEmoji == null
+                  ? widget.emojifyWidget ?? EmojifyWidget()
+                  : Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        LottieSource.build(
+                          src: widget.lottieSource,
+                          url: state.currentEmoji!.lottie,
+                          height: 30,
+                          width: 30,
+                        ),
+                        if (widget.showSelectedEmojiName)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              state.currentEmoji!.lottieName!,
+                              style: widget.selectedEmojiTextStyle,
+                            ),
+                          )
+                      ],
+                    ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

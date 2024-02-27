@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
 import 'package:xen_emojify/src/mixin/_xen_emojify_controller_mixin.dart';
+import 'package:xen_emojify/src/xen_emojify_state.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// The dock that displays list of [XenEmoji].
@@ -47,7 +48,15 @@ class XenEmojifyDock extends StatefulWidget {
 class _XenEmojifyDockState extends State<XenEmojifyDock>
     with XenEmojifyAnimationMixin, XenEmojifyControllerMixin {
   @override
+  void initState() {
+    super.initState();
+    initializeXenEmojifyControllers();
+  }
+
   Widget build(BuildContext context) {
+    final xenEmojifyState = XenEmojifyStateProvider.of(context);
+    print(xenEmojifyState.currentEmoji);
+
     return Container(
       height: widget.dockSize.height,
       width: widget.dockSize.width,
@@ -63,7 +72,8 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
           child: InkWell(
             onTap: () {
               widget.onEmojiSelect?.call(widget.xenEmojis[index]);
-              setCurrentEmoji(widget.xenEmojis[index]);
+              xenEmojifyState.setCurrentEmoji(widget.xenEmojis[index]);
+              hideDock();
             },
             child: LottieSource.build(
               src: LottieSource.network,
