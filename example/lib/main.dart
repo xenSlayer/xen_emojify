@@ -17,6 +17,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class MyEmojifyWidget extends EmojifyWidget {
+  const MyEmojifyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('like me');
+  }
+}
+
 class XenEmojifyExample extends StatefulWidget {
   const XenEmojifyExample({super.key});
 
@@ -99,6 +108,7 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                         XenEmojify(
                           lottieSource: LottieSource.network,
                           selectedEmojiSize: 10,
+                          emojifyWidget: const MyEmojifyWidget(),
                           xenEmojifyDock: XenEmojifyDock(
                             dockColor: Colors.amber.withOpacity(0.7),
                             onEmojiSelect: (emoji) {
@@ -106,7 +116,7 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                             },
                             xenEmojis: lottie,
                           ),
-                          initialEmoji: i == 0 ? initialEmoji : lottie[i],
+                          initialEmoji: i == 0 ? null : lottie[i],
                         ),
                         InkWell(
                           onTap: () {},

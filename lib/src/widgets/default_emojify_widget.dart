@@ -2,7 +2,12 @@
 import 'package:flutter/material.dart';
 
 ///
-abstract class EmojifyWidget extends StatelessWidget {}
+abstract class EmojifyWidget extends StatelessWidget {
+  final Key? key;
+
+  ///
+  const EmojifyWidget({this.key});
+}
 
 ///
 /// [EmojifyWidget] is a widget that allows you to display emojis
