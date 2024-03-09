@@ -69,14 +69,9 @@ class XenEmojify extends StatefulWidget {
 
 class _XenEmojifyState extends State<XenEmojify>
     with SelectedEmojiAnimationMixin, TickerProviderStateMixin {
-  ///
   late final AnimationController selectedEmojiController;
-
-  ///
   late final Animation<double> selectedEmojiAnimation;
-
   late final OverlayPortalController dockController;
-
   late final LayerLink dockLayerLink;
 
   XenEmoji? currentEmoji;

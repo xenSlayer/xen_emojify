@@ -23,7 +23,7 @@ class XenEmojifyDock extends StatefulWidget {
 
   /// The background color of the dock.
   ///
-  /// default: [Colors.grey]
+  /// defaults: `Color.fromARGB(200, 37, 17, 17)`
   final Color dockColor;
 
   /// The size of the dock
@@ -52,8 +52,6 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
   }
 
   Widget build(BuildContext context) {
-    final xenEmojify = XenEmojifyProvider.of(context);
-
     return Container(
       height: widget.dockSize.height,
       width: widget.dockSize.width,
@@ -67,11 +65,7 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
         itemBuilder: (context, index) => Tooltip(
           message: widget.xenEmojis[index].lottieName,
           child: InkWell(
-            onTap: () {
-              xenEmojify.setCurrentEmoji(widget.xenEmojis[index]);
-              widget.onEmojiSelect?.call(widget.xenEmojis[index]);
-              xenEmojify.hideDock();
-            },
+            onTap: () => setCurrentEmoji(context, index),
             child: LottieSource.build(
               src: LottieSource.network,
               url: widget.xenEmojis[index].lottie,
@@ -82,5 +76,12 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
         ),
       ),
     );
+  }
+
+  void setCurrentEmoji(BuildContext context, int index) {
+    final xenEmojify = XenEmojifyProvider.of(context);
+    xenEmojify.setCurrentEmoji(widget.xenEmojis[index]);
+    widget.onEmojiSelect?.call(widget.xenEmojis[index]);
+    xenEmojify.hideDock();
   }
 }
