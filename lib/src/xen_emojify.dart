@@ -1,12 +1,9 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
-import 'package:xen_emojify/src/mixin/_xen_emojify_controller_mixin.dart';
-import 'package:xen_emojify/src/xen_emojify_state.dart';
+import 'package:xen_emojify/src/xen_emojify_provider.dart';
 
 import 'package:xen_emojify/src/xen_emojify_widget.dart';
 import 'package:xen_emojify/xen_emojify.dart';
@@ -73,67 +70,78 @@ class XenEmojify extends StatefulWidget {
 }
 
 class _XenEmojifyState extends State<XenEmojify>
-    with
-        XenEmojifyAnimationMixin,
-        XenEmojifyControllerMixin,
-        TickerProviderStateMixin {
+    with XenEmojifyAnimationMixin, TickerProviderStateMixin {
   ///
   late final AnimationController selectedEmojiController;
 
   ///
   late final Animation<double> selectedEmojiAnimation;
 
-  final XenEmojifyState state = XenEmojifyState();
+  late final OverlayPortalController dockController;
+
+  late final LayerLink dockLayerLink;
+
+  XenEmoji? currentEmoji;
 
   @override
   void initState() {
     super.initState();
-    initializeXenEmojifyControllers();
     initializeAnimationControllers(
       this,
       widget.xenEmojifyDock.xenEmojis.length,
     );
-    if (widget.initialEmoji != null) {
-      state.setCurrentEmoji(widget.initialEmoji!);
-    }
+    dockController = OverlayPortalController();
+    dockLayerLink = LayerLink();
+    setCurrentEmoji(widget.initialEmoji);
   }
 
   @override
   void dispose() {
     disposeAnimationControllers();
+    if (dockController.isShowing) {
+      dockController.hide();
+    }
     super.dispose();
   }
 
+  Offset calculateDockPosition() {
+    return Offset(-widget.xenEmojifyDock.dockSize.width / 2 + 10, -80);
+  }
+
+  void setCurrentEmoji(XenEmoji? emoji) => setState(() => currentEmoji = emoji);
+
   @override
   Widget build(BuildContext context) {
-    log(state.currentEmoji!.lottieName.toString());
-    return XenEmojifyStateProvider(
-      state: state,
+    return XenEmojifyProvider(
+      dockController: dockController,
+      currentEmoji: widget.initialEmoji ?? currentEmoji,
+      setCurrentEmoji: setCurrentEmoji,
       child: OverlayPortal(
         controller: dockController,
         overlayChildBuilder: (context) {
           return CompositedTransformFollower(
-            link: xenEmojifyLayerLink,
-            offset: dockPosition(widget.xenEmojifyDock),
+            link: dockLayerLink,
+            showWhenUnlinked: false,
+            offset: calculateDockPosition(),
             child: Stack(children: [widget.xenEmojifyDock]),
           );
         },
         child: CompositedTransformTarget(
-          link: xenEmojifyLayerLink,
+          link: dockLayerLink,
           child: InkWell(
             highlightColor: Colors.amber,
             borderRadius: BorderRadius.circular(32),
-            onTap: showDock,
+            onTap: dockController.show,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: state.currentEmoji == null
+              child: currentEmoji == null
                   ? widget.emojifyWidget ?? EmojifyWidget()
                   : Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         LottieSource.build(
                           src: widget.lottieSource,
-                          url: state.currentEmoji!.lottie,
+                          url: currentEmoji!.lottie,
                           height: 30,
                           width: 30,
                         ),
@@ -141,7 +149,7 @@ class _XenEmojifyState extends State<XenEmojify>
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Text(
-                              state.currentEmoji!.lottieName!,
+                              currentEmoji!.lottieName!,
                               style: widget.selectedEmojiTextStyle,
                             ),
                           )

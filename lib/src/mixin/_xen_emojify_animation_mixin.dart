@@ -1,18 +1,29 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-// ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
 
+/// Zoom animation mixin for [XenEmojify].
+///
+/// This mixin provides the animation controllers and animations for the zoom
+/// animation of the emojis in the dock.
+///
+/// The mixin also provides the animation controller and animation for the
+/// selected emoji.
+///
 mixin XenEmojifyAnimationMixin {
+  ///
   late final List<AnimationController> zoomControllers;
 
+  ///
   late final List<Animation<double>> zoomAnimations;
 
+  ///
   late final AnimationController selectedEmojiController;
 
+  ///
   late final Animation<double> selectedEmojiAnimation;
 
+  ///
   void animateSelectedEmoji() {
     selectedEmojiAnimation = CurvedAnimation(
       parent: selectedEmojiController,
@@ -35,6 +46,7 @@ mixin XenEmojifyAnimationMixin {
     );
   }
 
+  ///
   void initializeAnimationControllers(TickerProvider vsync, int emojiCount) {
     zoomControllers = List.generate(emojiCount, (index) {
       return AnimationController(
@@ -53,6 +65,7 @@ mixin XenEmojifyAnimationMixin {
     );
   }
 
+  ///
   void disposeAnimationControllers() {
     for (final controller in zoomControllers) {
       controller.dispose();

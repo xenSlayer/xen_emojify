@@ -17,8 +17,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class XenEmojifyExample extends StatelessWidget {
+class XenEmojifyExample extends StatefulWidget {
   const XenEmojifyExample({super.key});
+
+  @override
+  State<XenEmojifyExample> createState() => _XenEmojifyExampleState();
+}
+
+class _XenEmojifyExampleState extends State<XenEmojifyExample> {
+  XenEmoji initialEmoji = const XenEmoji(
+    'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
+    lottieName: 'heart eyes',
+    lottieID: '1f60d',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +70,7 @@ class XenEmojifyExample extends StatelessWidget {
       body: Center(
         child: ListView(
           children: [
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
               Align(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,9 +101,12 @@ class XenEmojifyExample extends StatelessWidget {
                           selectedEmojiSize: 10,
                           xenEmojifyDock: XenEmojifyDock(
                             dockColor: Colors.amber.withOpacity(0.7),
+                            onEmojiSelect: (emoji) {
+                              setState(() => initialEmoji = emoji);
+                            },
                             xenEmojis: lottie,
                           ),
-                          initialEmoji: lottie[2],
+                          initialEmoji: i == 0 ? initialEmoji : lottie[i],
                         ),
                         InkWell(
                           onTap: () {},

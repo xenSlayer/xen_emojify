@@ -5,26 +5,26 @@
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
-mixin XenEmojifyControllerMixin {
-  late final LayerLink xenEmojifyLayerLink;
+// mixin XenEmojifyControllerMixin {
+//   late final LayerLink xenEmojifyLayerLink;
 
-  late final OverlayPortalController dockController;
+  // late final OverlayPortalController dockController;
 
-  void initializeXenEmojifyControllers() {
-    dockController = OverlayPortalController();
-    xenEmojifyLayerLink = LayerLink();
-  }
+//   void initializeXenEmojifyControllers() {
+//     dockController = OverlayPortalController();
+//     xenEmojifyLayerLink = LayerLink();
+//   }
 
-  Offset dockPosition(XenEmojifyDock dock) {
-    final dockSize = dock.dockSize;
-    return Offset(-dockSize.width / 2.5, -dockSize.height);
-  }
+//   Offset dockPosition(XenEmojifyDock dock) {
+//     final dockSize = dock.dockSize;
+//     return Offset(-dockSize.width / 2.5, -dockSize.height);
+//   }
 
-  void showDock() {
-    dockController.show();
-  }
+//   void showDock() {
+//     dockController.show();
+//   }
 
-  void hideDock() {
-    dockController.hide();
-  }
-}
+//   void hideDock() {
+//     dockController.hide();
+//   }
+// }
