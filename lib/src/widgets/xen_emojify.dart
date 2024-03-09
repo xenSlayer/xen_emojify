@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
-import 'package:xen_emojify/src/widgets/xen_emojify_widget.dart';
+import 'package:xen_emojify/src/widgets/default_emojify_widget.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// The widget that allows you to display emojis.
@@ -53,7 +53,7 @@ class XenEmojify extends StatefulWidget {
   final double selectedEmojiSize;
 
   /// The initial widget to be displayed.
-  final Widget? emojifyWidget;
+  final EmojifyWidget? emojifyWidget;
 
   /// The text style of the selected emoji.
   ///
@@ -133,7 +133,7 @@ class _XenEmojifyState extends State<XenEmojify>
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: currentEmoji == null
-                  ? widget.emojifyWidget ?? EmojifyWidget()
+                  ? widget.emojifyWidget ?? DefaultEmojifyWidget()
                   : Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [

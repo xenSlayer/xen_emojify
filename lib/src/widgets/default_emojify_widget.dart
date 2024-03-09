@@ -2,11 +2,14 @@
 import 'package:flutter/material.dart';
 
 ///
+abstract class EmojifyWidget extends StatelessWidget {}
+
+///
 /// [EmojifyWidget] is a widget that allows you to display emojis
 
-class EmojifyWidget extends StatelessWidget {
+class DefaultEmojifyWidget extends EmojifyWidget {
   ///
-  EmojifyWidget({
+  DefaultEmojifyWidget({
     this.onTap,
     this.padding = const EdgeInsets.all(8.0),
     this.defaultWidget = const Icon(Icons.add_circle_outline_rounded),
