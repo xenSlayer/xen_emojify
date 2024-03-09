@@ -1,11 +1,9 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
-
-import 'package:xen_emojify/src/mixin/_xen_emojify_animation_mixin.dart';
-import 'package:xen_emojify/src/xen_emojify_provider.dart';
-
-import 'package:xen_emojify/src/xen_emojify_widget.dart';
+import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
+import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
+import 'package:xen_emojify/src/widgets/xen_emojify_widget.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// The widget that allows you to display emojis.
@@ -55,7 +53,7 @@ class XenEmojify extends StatefulWidget {
   final double selectedEmojiSize;
 
   /// The initial widget to be displayed.
-  final EmojifyWidget? emojifyWidget;
+  final Widget? emojifyWidget;
 
   /// The text style of the selected emoji.
   ///
@@ -70,7 +68,7 @@ class XenEmojify extends StatefulWidget {
 }
 
 class _XenEmojifyState extends State<XenEmojify>
-    with XenEmojifyAnimationMixin, TickerProviderStateMixin {
+    with SelectedEmojiAnimationMixin, TickerProviderStateMixin {
   ///
   late final AnimationController selectedEmojiController;
 

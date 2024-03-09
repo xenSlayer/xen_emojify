@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 /// The mixin also provides the animation controller and animation for the
 /// selected emoji.
 ///
-mixin XenEmojifyAnimationMixin {
+mixin SelectedEmojiAnimationMixin {
   ///
   late final List<AnimationController> zoomControllers;
 

@@ -1,8 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 import 'package:flutter/material.dart';
 
-/// UNUSED
-///
 ///
 /// [EmojifyWidget] is a widget that allows you to display emojis
 
