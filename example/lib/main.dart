@@ -17,12 +17,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyEmojifyWidget extends EmojifyWidget {
+class MyEmojifyWidget extends StatelessWidget {
   const MyEmojifyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text('like me');
+    return const Text('react', style: TextStyle(fontWeight: FontWeight.bold));
   }
 }
 
@@ -36,7 +36,7 @@ class XenEmojifyExample extends StatefulWidget {
 class _XenEmojifyExampleState extends State<XenEmojifyExample> {
   XenEmoji initialEmoji = const XenEmoji(
     'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-    lottieName: 'heart eyes',
+    label: 'heart eyes',
     lottieID: '1f60d',
   );
 
@@ -45,32 +45,32 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
     final lottie = [
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-        lottieName: 'heart eyes',
+        label: 'heart eyes',
         lottieID: '1f60d',
       ),
       const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
-        lottieName: 'laughing',
+        'https://lottie.host/e9e0b847-de55-4537-8406-d1a9a2be02c7/yMBPVCKSru.json',
+        label: 'laughing',
         lottieID: '1f606',
       ),
       const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/lottie.json',
-        lottieName: 'sunglasses',
+        'https://lottie.host/f7d6b7cf-58f5-4e5e-8a17-8b6087f2e442/A3QjXpmhk9.json',
+        label: 'sunglasses',
         lottieID: '1f60e',
       ),
       const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60f/lottie.json',
-        lottieName: 'smirk',
+        'https://lottie.host/f47215b5-db87-4c46-82f7-874cb904d7a1/UCA1WVixmM.json',
+        label: 'indian smirk',
         lottieID: '1f60f',
       ),
       const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f602/lottie.json',
-        lottieName: 'joy',
+        'https://lottie.host/34bf46c9-be14-4e81-a1ba-49e7e64a0d47/g7iC1sdHC2.json',
+        label: 'joy',
         lottieID: '1f602',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f603/lottie.json',
-        lottieName: 'smile',
+        label: 'smile',
         lottieID: '1f603',
       ),
     ];
@@ -105,18 +105,26 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       spacing: 5,
                       children: [
-                        XenEmojify(
-                          lottieSource: LottieSource.network,
-                          selectedEmojiSize: 10,
-                          emojifyWidget: const MyEmojifyWidget(),
-                          xenEmojifyDock: XenEmojifyDock(
-                            dockColor: Colors.amber.withOpacity(0.7),
-                            onEmojiSelect: (emoji) {
-                              setState(() => initialEmoji = emoji);
-                            },
-                            xenEmojis: lottie,
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          initialEmoji: i == 0 ? null : lottie[i],
+                          child: XenEmojify(
+                            lottieSource: LottieSource.network,
+                            selectedEmojiSize: 10,
+                            displayLabel: false,
+                            xenEmojifyDock: XenEmojifyDock(
+                              dockColor: Colors.amber.withOpacity(0.7),
+                              onEmojiSelect: (emoji) {
+                                setState(() => initialEmoji = emoji);
+                              },
+                              xenEmojis: lottie,
+                            ),
+                            initialEmoji: i == 0 ? null : lottie[i],
+                            child: const MyEmojifyWidget(),
+                          ),
                         ),
                         InkWell(
                           onTap: () {},

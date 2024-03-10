@@ -1,6 +1,7 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
+import 'package:xen_emojify/src/animations/_hovered_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
 import 'package:xen_emojify/xen_emojify.dart';
@@ -8,6 +9,7 @@ import 'package:xen_emojify/xen_emojify.dart';
 /// The dock that displays list of [XenEmoji].
 /// This widget pops up when the user taps on the [XenEmojify] widget.
 /// The user can select an [XenEmoji] from the dock.
+///
 class XenEmojifyDock extends StatefulWidget {
   ///
   const XenEmojifyDock({
@@ -38,17 +40,28 @@ class XenEmojifyDock extends StatefulWidget {
   /// The callback function that is called when an emoji is selected.
   ///
   /// The selected [XenEmoji] is received as a parameter.
-  final void Function(XenEmoji emoji)? onEmojiSelect;
+  final SetEmoji? onEmojiSelect;
 
   @override
   State<XenEmojifyDock> createState() => _XenEmojifyDockState();
 }
 
 class _XenEmojifyDockState extends State<XenEmojifyDock>
-    with SelectedEmojiAnimationMixin {
+    with
+        HoveredEmojiAnimationMixin,
+        SelectedEmojiAnimationMixin,
+        TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    initController(this);
+    init(this, widget.xenEmojis.length);
+  }
+
+  @override
+  void dispose() {
+    disposeControllers();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -62,23 +75,34 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget.xenEmojis.length,
-        itemBuilder: (context, index) => Tooltip(
-          message: widget.xenEmojis[index].lottieName,
-          child: InkWell(
-            onTap: () => setCurrentEmoji(context, index),
-            child: LottieSource.build(
-              src: LottieSource.network,
-              url: widget.xenEmojis[index].lottie,
-              height: 30,
-              width: 30,
+        itemBuilder: (context, index) {
+          return MouseRegion(
+            onEnter: (_) => zoomControllers[index].forward(),
+            onExit: (_) => zoomControllers[index].reverse(),
+            child: AnimatedBuilder(
+              animation: zoomAnimations[index],
+              builder: (context, child) {
+                return Tooltip(
+                  message: widget.xenEmojis[index].label,
+                  child: GestureDetector(
+                    onTap: () => _handleOnTap(context, index),
+                    child: LottieSource.build(
+                      src: LottieSource.network,
+                      url: widget.xenEmojis[index].lottie,
+                      height: zoomAnimations[index].value,
+                      width: zoomAnimations[index].value,
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
 
-  void setCurrentEmoji(BuildContext context, int index) {
+  void _handleOnTap(BuildContext context, int index) {
     final xenEmojify = XenEmojifyProvider.of(context);
     xenEmojify.setCurrentEmoji(widget.xenEmojis[index]);
     widget.onEmojiSelect?.call(widget.xenEmojis[index]);

@@ -42,12 +42,7 @@ enum LottieSource {
           width: width,
           repeat: false,
         ),
-      LottieSource.file => LottieBuilder.file(
-          url,
-          height: height,
-          width: width,
-          repeat: false,
-        ),
+      LottieSource.file => throw UnimplementedError()
     };
   }
 }

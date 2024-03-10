@@ -7,7 +7,7 @@ class XenEmoji {
   ///
   const XenEmoji(
     this.lottie, {
-    this.lottieName,
+    this.label,
     this.lottieID,
     this.lottieSource,
   });
@@ -15,13 +15,13 @@ class XenEmoji {
   /// Path to lottie file.
   ///
   /// This can be a network url, file url or asset url.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// `network`: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/lottie.json'
-  /// 
+  ///
   /// `asset`: 'assets/emoji.json'
-  /// 
+  ///
   /// `file`: '/path/to/emoji.json'
   final String lottie;
 
@@ -29,10 +29,10 @@ class XenEmoji {
   ///
   /// Can be any custom name.
   /// Will be displayed next to the currently selected [XenEmoji].
-  final String? lottieName;
+  final String? label;
 
   /// The id of the lottie.
-  /// 
+  ///
   /// Can be any custom id to uniquely identify the [XenEmoji].
   final String? lottieID;
 
@@ -43,7 +43,7 @@ class XenEmoji {
 
   @override
   String toString() {
-    return 'XenEmoji(lottie: $lottie, emojiName: $lottieName, emojiID: $lottieID, lottieSource: $lottieSource)';
+    return 'XenEmoji(lottie: $lottie, emojiName: $label, emojiID: $lottieID, lottieSource: $lottieSource)';
   }
 
   @override
@@ -52,16 +52,12 @@ class XenEmoji {
 
     return other is XenEmoji &&
         other.lottie == lottie &&
-        other.lottieName == lottieName &&
-        other.lottieID == lottieID &&
-        other.lottieSource == lottieSource;
+        other.label == label &&
+        other.lottieID == lottieID;
   }
 
   @override
   int get hashCode {
-    return lottie.hashCode ^
-        lottieName.hashCode ^
-        lottieID.hashCode ^
-        lottieSource.hashCode;
+    return lottie.hashCode ^ label.hashCode ^ lottieID.hashCode;
   }
 }

@@ -1,9 +1,9 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
-import 'package:xen_emojify/src/widgets/default_emojify_widget.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
 /// The widget that allows you to display emojis.
@@ -15,12 +15,11 @@ class XenEmojify extends StatefulWidget {
   ///
   const XenEmojify({
     required this.xenEmojifyDock,
+    required this.child,
     this.initialEmoji,
     this.lottieSource = LottieSource.network,
-    this.lottieLoadErrorBuilder = const LottieLoadErrorBuilder(),
-    this.showSelectedEmojiName = true,
+    this.displayLabel = true,
     this.selectedEmojiSize = 40,
-    this.emojifyWidget,
     this.selectedEmojiTextStyle = const TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w800,
@@ -36,16 +35,11 @@ class XenEmojify extends StatefulWidget {
   /// The source of the lottie file.
   final LottieSource lottieSource;
 
-  /// The builder to be displayed when lottie file fails to load.
-  ///
-  /// If not provided, the default [LottieLoadErrorBuilder] will be displayed.
-  final Widget lottieLoadErrorBuilder;
-
   /// Whether to show the name of the selected emoji.
   /// If true, the name of the selected emoji will be displayed.
   ///
   /// Defaults to true.
-  final bool showSelectedEmojiName;
+  final bool displayLabel;
 
   /// The size of the selected emoji.
   ///
@@ -53,7 +47,7 @@ class XenEmojify extends StatefulWidget {
   final double selectedEmojiSize;
 
   /// The initial widget to be displayed.
-  final EmojifyWidget? emojifyWidget;
+  final Widget? child;
 
   /// The text style of the selected emoji.
   ///
@@ -69,28 +63,22 @@ class XenEmojify extends StatefulWidget {
 
 class _XenEmojifyState extends State<XenEmojify>
     with SelectedEmojiAnimationMixin, TickerProviderStateMixin {
-  late final AnimationController selectedEmojiController;
-  late final Animation<double> selectedEmojiAnimation;
+  late final LayerLink _dockLayerLink;
   late final OverlayPortalController dockController;
-  late final LayerLink dockLayerLink;
-
   XenEmoji? currentEmoji;
 
   @override
   void initState() {
     super.initState();
-    initializeAnimationControllers(
-      this,
-      widget.xenEmojifyDock.xenEmojis.length,
-    );
+    initController(this);
     dockController = OverlayPortalController();
-    dockLayerLink = LayerLink();
-    setCurrentEmoji(widget.initialEmoji);
+    _dockLayerLink = LayerLink();
+    _setCurrentEmoji(widget.initialEmoji);
   }
 
   @override
   void dispose() {
-    disposeAnimationControllers();
+    disposeAnimation();
     if (dockController.isShowing) {
       dockController.hide();
     }
@@ -101,68 +89,72 @@ class _XenEmojifyState extends State<XenEmojify>
     return Offset(-widget.xenEmojifyDock.dockSize.width / 2 + 10, -80);
   }
 
-  void setCurrentEmoji(XenEmoji? emoji) => setState(() => currentEmoji = emoji);
+  void _setCurrentEmoji(XenEmoji? emoji) {
+    setState(() => currentEmoji = emoji);
+  }
 
   @override
   Widget build(BuildContext context) {
     return XenEmojifyProvider(
       dockController: dockController,
       currentEmoji: widget.initialEmoji ?? currentEmoji,
-      setCurrentEmoji: setCurrentEmoji,
+      // selectedEmojiController: selectedEmojiController,
+      setCurrentEmoji: _setCurrentEmoji,
       child: OverlayPortal(
         controller: dockController,
         overlayChildBuilder: (context) {
           return CompositedTransformFollower(
-            link: dockLayerLink,
+            link: _dockLayerLink,
             showWhenUnlinked: false,
             offset: calculateDockPosition(),
             child: Stack(children: [widget.xenEmojifyDock]),
           );
         },
         child: CompositedTransformTarget(
-          link: dockLayerLink,
-          child: InkWell(
-            highlightColor: Colors.amber,
-            borderRadius: BorderRadius.circular(32),
-            onTap: dockController.show,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: currentEmoji == null
-                  ? widget.emojifyWidget ?? DefaultEmojifyWidget()
-                  : Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        LottieSource.build(
-                          src: widget.lottieSource,
-                          url: currentEmoji!.lottie,
-                          height: 30,
-                          width: 30,
-                        ),
-                        if (widget.showSelectedEmojiName)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              currentEmoji!.lottieName!,
-                              style: widget.selectedEmojiTextStyle,
-                            ),
-                          )
-                      ],
-                    ),
+          link: _dockLayerLink,
+          child: Tooltip(
+            message: currentEmoji?.label ?? '',
+            child: InkWell(
+              highlightColor: Colors.amber,
+              borderRadius: BorderRadius.circular(32),
+              onTap: dockController.show,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: currentEmoji == null
+                    ? widget.child
+                    : Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          AnimatedBuilder(
+                            animation: selectedEmojiAnimation,
+                            builder: (context, child) {
+                              print(selectedEmojiAnimation.value);
+                              return Lottie.network(
+                                currentEmoji!.lottie,
+                                height: 30,
+                                width: 30,
+                              );
+                            },
+                          ),
+                          if (widget.displayLabel) _labelBuilder()
+                        ],
+                      ),
+              ),
             ),
           ),
         ),
       ),
     );
   }
-}
 
-///
-class LottieLoadErrorBuilder extends StatelessWidget {
-  ///
-  const LottieLoadErrorBuilder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text('error loading lottie');
+  Widget _labelBuilder() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Text(
+        currentEmoji!.label!,
+        style: widget.selectedEmojiTextStyle,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
   }
 }

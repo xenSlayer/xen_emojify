@@ -2,7 +2,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
 
+/// The provider that provides the [XenEmojifyDock] with the current [XenEmoji].
 ///
+/// The [XenEmojifyProvider] is an [InheritedWidget] that provides the [XenEmojifyDock]
+/// with the current [XenEmoji] and the [SetEmoji] function to set the current [XenEmoji].
+///
+/// The [XenEmojifyProvider] also provides the [OverlayPortalController] to show and hide the dock.
 class XenEmojifyProvider extends InheritedWidget {
   ///
   final OverlayPortalController dockController;
@@ -11,13 +16,17 @@ class XenEmojifyProvider extends InheritedWidget {
   final XenEmoji? currentEmoji;
 
   ///
-  final Function(XenEmoji emoji) setCurrentEmoji;
+  final SetEmoji setCurrentEmoji;
+
+  ///
+  // final AnimationController selectedEmojiController;
 
   ///
   XenEmojifyProvider({
     required Widget child,
     required this.dockController,
     required this.setCurrentEmoji,
+    // required this.selectedEmojiController,
     Key? key,
     this.currentEmoji,
   }) : super(key: key, child: child);
@@ -43,3 +52,12 @@ class XenEmojifyProvider extends InheritedWidget {
   ///
   void hideDock() => dockController.hide();
 }
+
+/// A function signature for setting an [XenEmoji].
+///
+/// The function takes an [XenEmoji] as a parameter and does not return any value.
+/// Usage example:
+/// ```dart
+/// void setEmoji(XenEmoji emoji) {}
+/// ```
+typedef SetEmoji = void Function(XenEmoji emoji);

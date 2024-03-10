@@ -4,13 +4,13 @@ version: 0.0.1
 homepage: https://github.com/xenSlayer/xen_emojify
 
 environment:
-  sdk: ">=3.2.6 <4.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.3"
 
 dependencies:
   flutter:
     sdk: flutter
-  lottie: ^3.0.0
+  lottie: ^3.1.0
 
 dev_dependencies:
   flutter_test:
