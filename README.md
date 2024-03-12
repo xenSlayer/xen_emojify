@@ -1,4 +1,4 @@
-****# **xen_emojify**
+# **xen_emojify**
 
 [![license](https://img.shields.io/badge/licence-BSD-white.svg)](https://github.com/xenSlayer/xen_emojify/blob/master/LICENSE)
 [![Stars](https://img.shields.io/github/stars/xenSlayer/xen_emojify)](https://github.com/xenSlayer/xen_emojify)
