@@ -1,4 +1,4 @@
-# **xen_emojify**
+****# **xen_emojify**
 
 [![license](https://img.shields.io/badge/licence-BSD-white.svg)](https://github.com/xenSlayer/xen_emojify/blob/master/LICENSE)
 [![Stars](https://img.shields.io/github/stars/xenSlayer/xen_emojify)](https://github.com/xenSlayer/xen_emojify)
@@ -9,16 +9,13 @@
 
 ****
 
-## TRY DEMO
-<hr><br>
+## <a href="https://xenslayer.github.io/xen_emojify/" target="_blank"> TRY WEB DEMO
+</a>
 
-<iframe src="https://xenslayer.github.io/xen_emojify/" width="100%" height="400"></iframe>
-
-<hr><br>
 
 <img src="misc/xen-emojify.gif"><hr>
 
-xen_emojify is a versatile Flutter package designed to enhance user interaction by providing a rich and engaging way to display Facebook-like reactions within your app. Leveraging the power of <a href='https://pub.dev/packages/lottie'>Lottie</a>, a dynamic animation library, this package delivers seamless and visually stunning animations, ensuring a delightful user experience.
+xen_emojify is a versatile Flutter package designed to enhance user interaction by providing a rich and engaging way to display Facebook-like reactions within your app. Leveraging the power of <a href='https://pub.dev/packages/lottie' target="_blank">Lottie</a>, a dynamic animation library, this package delivers seamless and visually stunning animations, ensuring a delightful user experience.
 
 With xen_emojify, you can easily integrate a customizable reaction widget into your Flutter app, offering users a range of expressive reactions such as like, love, laugh, and more. This widget is highly customizable, allowing you to adjust its size, color scheme, and animation speed to suit your app's design and branding.
 
@@ -37,8 +34,8 @@ Whether you're developing a social media platform, a content-sharing app, or any
 
 ## FREE LOTTIES
 
-1. <a href="https://googlefonts.github.io/noto-emoji-animation/"> **Noto Animated Emoji** </a>
-2. <a href="https://iconscout.com/lottie-animations">**IconScout**</a>
+1. <a href="https://googlefonts.github.io/noto-emoji-animation/" target="_blank"> **Noto Animated Emoji** </a>
+2. <a href="https://iconscout.com/lottie-animations" target="_blank">**IconScout**</a>
 
 
 ## Getting started
