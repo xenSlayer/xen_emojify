@@ -1,0 +1,18 @@
+name: Deploy example to github
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  web-deploy:
+    name: XenEmoji Web Example
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - uses: xenSlayer/flutter-gh-pages@main
+        with:
+          workingDir: example
+          baseHref: /xen_emojify/

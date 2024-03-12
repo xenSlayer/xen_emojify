@@ -10,7 +10,7 @@ import 'package:flutter/animation.dart';
 /// The mixin also provides the animation controller and animation for the
 /// selected emoji.
 ///
-mixin SelectedEmojiAnimationMixin {
+class SelectedEmojiAnimation {
   ///
   late final AnimationController selectedEmojiController;
 
@@ -21,49 +21,34 @@ mixin SelectedEmojiAnimationMixin {
   void initController(TickerProvider vsync) {
     selectedEmojiController = AnimationController(
       vsync: vsync,
-      duration: const Duration(milliseconds: 650),
+      duration: const Duration(milliseconds: 450),
     );
-
-    selectedEmojiAnimation = CurvedAnimation(
-      parent: selectedEmojiController,
-      curve: Curves.easeInOutCubic,
-    );
+    selectedEmojiAnimation = _animation();
   }
 
   ///
   void animate() {
-    selectedEmojiAnimation.drive(_animation());
+    selectedEmojiController.value = 0;
+    selectedEmojiController.forward();
   }
 
-  TweenSequence _animation() {
+  Animation<double> _animation() {
     return TweenSequence<double>(
       [
-        // TweenSequenceItem(
-        //   tween: Tween<double>(begin: 0.2, end: 1.2),
-        //   weight: 2,
-        // ),
-        // TweenSequenceItem(
-        //   tween: Tween<double>(begin: 1.2, end: 4),
-        //   weight: 8,
-        // ),
-        // TweenSequenceItem(
-        //   tween: Tween<double>(begin: 4, end: 1.2),
-        //   weight: 1,
-        // ),
         TweenSequenceItem(
-          tween: Tween<double>(begin: 20, end: 30),
-          weight: 2,
+          tween: Tween<double>(begin: 0.2, end: 1.4),
+          weight: 4,
         ),
         TweenSequenceItem(
-          tween: Tween<double>(begin: 30, end: 25),
-          weight: 8,
+          tween: Tween<double>(begin: 1.4, end: 5),
+          weight: 7,
         ),
         TweenSequenceItem(
-          tween: Tween<double>(begin: 25, end: 20),
+          tween: Tween<double>(begin: 5, end: 1.4),
           weight: 1,
         ),
       ],
-    );
+    ).animate(selectedEmojiController);
   }
 
   ///

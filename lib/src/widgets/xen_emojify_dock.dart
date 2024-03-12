@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:xen_emojify/src/animations/_hovered_emoji_animation_mixin.dart';
-import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
 import 'package:xen_emojify/xen_emojify.dart';
 
@@ -47,14 +46,10 @@ class XenEmojifyDock extends StatefulWidget {
 }
 
 class _XenEmojifyDockState extends State<XenEmojifyDock>
-    with
-        HoveredEmojiAnimationMixin,
-        SelectedEmojiAnimationMixin,
-        TickerProviderStateMixin {
+    with HoveredEmojiAnimationMixin, TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    initController(this);
     init(this, widget.xenEmojis.length);
   }
 
@@ -89,8 +84,10 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
                     child: LottieSource.build(
                       src: LottieSource.network,
                       url: widget.xenEmojis[index].lottie,
-                      height: zoomAnimations[index].value,
-                      width: zoomAnimations[index].value,
+                      size: Size(
+                        zoomAnimations[index].value,
+                        zoomAnimations[index].value,
+                      ),
                     ),
                   ),
                 );
@@ -107,5 +104,6 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
     xenEmojify.setCurrentEmoji(widget.xenEmojis[index]);
     widget.onEmojiSelect?.call(widget.xenEmojis[index]);
     xenEmojify.hideDock();
+    xenEmojify.selectedEmojiAnimation.animate();
   }
 }

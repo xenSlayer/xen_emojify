@@ -1,7 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
 import 'package:xen_emojify/xen_emojify.dart';
@@ -15,11 +14,11 @@ class XenEmojify extends StatefulWidget {
   ///
   const XenEmojify({
     required this.xenEmojifyDock,
-    required this.child,
+    this.placeholderWidget = const Icon(Icons.add),
     this.initialEmoji,
     this.lottieSource = LottieSource.network,
     this.displayLabel = true,
-    this.selectedEmojiSize = 40,
+    this.selectedEmojiSize = 25,
     this.selectedEmojiTextStyle = const TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w800,
@@ -47,7 +46,7 @@ class XenEmojify extends StatefulWidget {
   final double selectedEmojiSize;
 
   /// The initial widget to be displayed.
-  final Widget? child;
+  final Widget placeholderWidget;
 
   /// The text style of the selected emoji.
   ///
@@ -61,24 +60,31 @@ class XenEmojify extends StatefulWidget {
   State<XenEmojify> createState() => _XenEmojifyState();
 }
 
-class _XenEmojifyState extends State<XenEmojify>
-    with SelectedEmojiAnimationMixin, TickerProviderStateMixin {
+///
+class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
   late final LayerLink _dockLayerLink;
+
   late final OverlayPortalController dockController;
+
   XenEmoji? currentEmoji;
+
+  final _selectedEmojiAnimation = SelectedEmojiAnimation();
 
   @override
   void initState() {
     super.initState();
-    initController(this);
+    _selectedEmojiAnimation.initController(this);
     dockController = OverlayPortalController();
     _dockLayerLink = LayerLink();
     _setCurrentEmoji(widget.initialEmoji);
+    if (currentEmoji != null) {
+      _selectedEmojiAnimation.animate();
+    }
   }
 
   @override
   void dispose() {
-    disposeAnimation();
+    _selectedEmojiAnimation.disposeAnimation();
     if (dockController.isShowing) {
       dockController.hide();
     }
@@ -98,7 +104,7 @@ class _XenEmojifyState extends State<XenEmojify>
     return XenEmojifyProvider(
       dockController: dockController,
       currentEmoji: widget.initialEmoji ?? currentEmoji,
-      // selectedEmojiController: selectedEmojiController,
+      selectedEmojiAnimation: _selectedEmojiAnimation,
       setCurrentEmoji: _setCurrentEmoji,
       child: OverlayPortal(
         controller: dockController,
@@ -120,25 +126,7 @@ class _XenEmojifyState extends State<XenEmojify>
               onTap: dockController.show,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: currentEmoji == null
-                    ? widget.child
-                    : Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          AnimatedBuilder(
-                            animation: selectedEmojiAnimation,
-                            builder: (context, child) {
-                              print(selectedEmojiAnimation.value);
-                              return Lottie.network(
-                                currentEmoji!.lottie,
-                                height: 30,
-                                width: 30,
-                              );
-                            },
-                          ),
-                          if (widget.displayLabel) _labelBuilder()
-                        ],
-                      ),
+                child: _resolveEmojifyWidget(),
               ),
             ),
           ),
@@ -156,5 +144,26 @@ class _XenEmojifyState extends State<XenEmojify>
         overflow: TextOverflow.ellipsis,
       ),
     );
+  }
+
+  Widget _resolveEmojifyWidget() {
+    if (currentEmoji == null) {
+      return widget.placeholderWidget;
+    } else {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          ScaleTransition(
+            scale: _selectedEmojiAnimation.selectedEmojiAnimation,
+            child: LottieSource.build(
+              src: widget.lottieSource,
+              url: currentEmoji!.lottie,
+              size: Size(widget.selectedEmojiSize, widget.selectedEmojiSize),
+            ),
+          ),
+          if (widget.displayLabel) _labelBuilder()
+        ],
+      );
+    }
   }
 }

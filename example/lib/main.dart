@@ -107,14 +107,14 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                       children: [
                         DecoratedBox(
                           decoration: BoxDecoration(
-                            color: Colors.amber,
+                            color: Colors.grey,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: XenEmojify(
                             lottieSource: LottieSource.network,
-                            selectedEmojiSize: 10,
-                            displayLabel: false,
+                            // selectedEmojiSize: 10,
+                            displayLabel: true,
                             xenEmojifyDock: XenEmojifyDock(
                               dockColor: Colors.amber.withOpacity(0.7),
                               onEmojiSelect: (emoji) {
@@ -123,7 +123,7 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                               xenEmojis: lottie,
                             ),
                             initialEmoji: i == 0 ? null : lottie[i],
-                            child: const MyEmojifyWidget(),
+                            // placeholderWidget: const MyEmojifyWidget(),
                           ),
                         ),
                         InkWell(

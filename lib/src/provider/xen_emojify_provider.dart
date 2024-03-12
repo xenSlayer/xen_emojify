@@ -1,5 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 import 'package:flutter/widgets.dart';
+import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
 
 /// The provider that provides the [XenEmojifyDock] with the current [XenEmoji].
@@ -19,6 +20,9 @@ class XenEmojifyProvider extends InheritedWidget {
   final SetEmoji setCurrentEmoji;
 
   ///
+  final SelectedEmojiAnimation selectedEmojiAnimation;
+
+  ///
   // final AnimationController selectedEmojiController;
 
   ///
@@ -26,7 +30,7 @@ class XenEmojifyProvider extends InheritedWidget {
     required Widget child,
     required this.dockController,
     required this.setCurrentEmoji,
-    // required this.selectedEmojiController,
+    required this.selectedEmojiAnimation,
     Key? key,
     this.currentEmoji,
   }) : super(key: key, child: child);
