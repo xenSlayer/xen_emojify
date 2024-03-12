@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - uses: xenSlayer/flutter-gh-pages@main
+      - uses: bluefireteam/flutter-gh-pages@v7
         with:
           workingDir: example
           baseHref: /xen_emojify/
