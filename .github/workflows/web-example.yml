@@ -2,7 +2,7 @@ name: Deploy example to github
 
 on:
   push:
-    branches: [develop]
+    branches: [dev]
 
 jobs:
   web-deploy:
