@@ -9,7 +9,11 @@
 
 ****
 
+## **<a href = "https://xenslayer.github.io/xen_emojify/">TRY DEMO IN WEB**</a>
+
 <br>
+
+
 
 <img src="misc/xen-emojify.gif"><hr>
 
