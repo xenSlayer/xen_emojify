@@ -5,7 +5,7 @@
 [![effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://dart.dev/guides/language/effective-dart)
 
 
-⚠️BEFORE STARTING READ:<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE"> **LOTTIE LICENSE** </a>
+⚠️BEFORE STARTING READ:<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE" target="_blank"> **LOTTIE LICENSE** </a>
 
 ****
 
