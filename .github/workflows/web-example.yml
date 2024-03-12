@@ -6,7 +6,7 @@ on:
 
 jobs:
   web-deploy:
-    name: XenEmoji Web Example
+    name: XenEmoji Web Example.
     runs-on: macos-latest
 
     steps:
