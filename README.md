@@ -10,9 +10,11 @@
 ****
 
 ## TRY DEMO
+<hr><br>
 
 <iframe src="https://xenslayer.github.io/xen_emojify/" width="100%" height="400"></iframe>
 
+<hr><br>
 
 <img src="misc/xen-emojify.gif"><hr>
 
