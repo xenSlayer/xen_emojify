@@ -1,3 +1,4 @@
-## 0.0.1
+# v1.0.0
 
-* TODO: Describe initial release.
+* 🎉 xen_emojify initial release.
+
