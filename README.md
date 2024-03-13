@@ -5,9 +5,8 @@
 [![effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://dart.dev/guides/language/effective-dart)
 
 
-⚠️BEFORE STARTING READ:<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE" target="_blank"> **LOTTIE LICENSE** </a>
+## ⚠️BEFORE STARTING READ:<a href="https://github.com/xvrh/lottie-flutter/blob/master/LICENSE" target="_blank"> **LOTTIE LICENSE** </a>
 
-****
 
 ## <a href="https://xenslayer.github.io/xen_emojify/" target="_blank"> TRY WEB DEMO
 </a>
@@ -40,66 +39,45 @@ Whether you're developing a social media platform, a content-sharing app, or any
 
 ## Getting started
 In your pubspec.yaml file, add the following dependency:
-```
+```yaml
 dependencies:
-    xen_emojify: {latest_version}
+    xen_emojify: current_version
 ```
 
 
 ## Import the xen_emojify package
 
-```
+```dart
 import 'package:xen_emojify/xen_emojify.dart';
 ```
 <hr>
 
 ## Example Usage
 
-```
-import 'package:flutter/material.dart';
-import 'package:xen_emojify/xen_emojify.dart';
+```dart
+  XenEmoji initialEmoji = const XenEmoji(
+      'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
+      label: 'heart eyes',
+      lottieID: '1f60d',
+    );
 
-class XenEmojifyExample extends StatelessWidget {
-  const XenEmojifyExample({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final lottie = [
-      const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
-        lottieName: 'heart',
-        lottieID: '1f60d',
-      ),
-      const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/lottie.json',
-        lottieName: 'laughing',
-        lottieID: '1f606',
-      ),
-      const XenEmoji(
-        'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/lottie.json',
-        lottieName: 'sunglasses',
-        lottieID: '1f60e',
-      ),
-    ];
-
-    return Scaffold(
-      body: ListView(
-        children: [
-          Center(
-            child: XenEmojify(
-              lottieSource: LottieSource.network,
-              selectedEmojiSize: 10,
-              xenEmojifyDock: XenEmojifyDock(
-                xenEmojis: lottie,
-                onEmojiSelect: print,
-              ),
-              initialEmoji: lottie[1],
-            ),
+    final xenEmojifyWidget = XenEmojify(
+      lottieSource: LottieSources.network,
+      displayLabel: true,
+      initialEmoji: initialEmoji,
+      xenEmojifyDock: XenEmojifyDock(
+        dockColor: Colors.amber.withOpacity(0.7),
+        onEmojiSelect: (emoji) {
+          setState(() => initialEmoji = emoji);
+        },
+        xenEmojis: const [
+          XenEmoji(
+            'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',
+            label: 'Heart Eyes',
+            lottieID: '1f60d',
           ),
         ],
       ),
     );
-  }
-}
-
 ```

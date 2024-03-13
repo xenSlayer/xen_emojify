@@ -1,6 +1,6 @@
 name: xen_emojify
 description: "xen_emojify is a versatile Flutter package designed to enhance user interaction by providing a rich and engaging way to display Facebook-like reactions within your app."
-version: 0.0.1
+version: 1.0.0
 homepage: https://github.com/xenSlayer/xen_emojify
 
 environment:

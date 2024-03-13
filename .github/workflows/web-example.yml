@@ -1,4 +1,4 @@
-name: Deploy example to github
+name: Deploy example app to github pages
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   web-deploy:
-    name: XenEmoji Web Example
+    name: xen_emojify web example app
     runs-on: macos-latest
 
     steps:

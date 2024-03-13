@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:lottie/lottie.dart';
 
 ///
-enum LottieSource {
+enum LottieSources {
   /// Lottie source from assets
   asset,
 
@@ -13,9 +13,9 @@ enum LottieSource {
   network,
   ;
 
-  const LottieSource();
+  const LottieSources();
 
-  /// Builds a [LottieBuilder] based on the [LottieSource].
+  /// Builds a [LottieBuilder] based on the [LottieSources].
   ///
   /// The [url] is the path to the lottie file.
   ///
@@ -23,18 +23,18 @@ enum LottieSource {
   ///
   /// The [repeat] is the repeat mode of the lottie.
   static LottieBuilder build({
-    required LottieSource src,
+    required LottieSources src,
     required String url,
     Size? size,
   }) {
     return switch (src) {
-      LottieSource.asset => LottieBuilder.asset(
+      LottieSources.asset => LottieBuilder.asset(
           url,
           height: size?.height,
           width: size?.width,
           repeat: false,
         ),
-      LottieSource.network => LottieBuilder.network(
+      LottieSources.network => LottieBuilder.network(
           url,
           height: size?.height,
           width: size?.width,

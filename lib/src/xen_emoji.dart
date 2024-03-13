@@ -1,6 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-import 'package:xen_emojify/xen_emojify.dart';
+import 'package:xen_emojify/src/enums/lottie_sources.dart';
 
 /// The data class for [XenEmoji].
 class XenEmoji {
@@ -38,8 +38,8 @@ class XenEmoji {
 
   /// The source of the lottie.
   ///
-  /// Can be [LottieSource.asset], [LottieSource.network] or [LottieSource.file].
-  final LottieSource? lottieSource;
+  /// Can be [LottieSources.asset], [LottieSources.network] or [LottieSources.file].
+  final LottieSources? lottieSource;
 
   @override
   String toString() {

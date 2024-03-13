@@ -16,7 +16,7 @@ class XenEmojify extends StatefulWidget {
     required this.xenEmojifyDock,
     this.placeholderWidget = const Icon(Icons.add),
     this.initialEmoji,
-    this.lottieSource = LottieSource.network,
+    this.lottieSource = LottieSources.network,
     this.displayLabel = true,
     this.selectedEmojiSize = 25,
     this.selectedEmojiTextStyle = const TextStyle(
@@ -32,7 +32,7 @@ class XenEmojify extends StatefulWidget {
   final XenEmoji? initialEmoji;
 
   /// The source of the lottie file.
-  final LottieSource lottieSource;
+  final LottieSources lottieSource;
 
   /// Whether to show the name of the selected emoji.
   /// If true, the name of the selected emoji will be displayed.
@@ -135,17 +135,6 @@ class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
     );
   }
 
-  Widget _labelBuilder() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Text(
-        currentEmoji!.label!,
-        style: widget.selectedEmojiTextStyle,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
-
   Widget _resolveEmojifyWidget() {
     if (currentEmoji == null) {
       return widget.placeholderWidget;
@@ -155,7 +144,7 @@ class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
         children: [
           ScaleTransition(
             scale: _selectedEmojiAnimation.selectedEmojiAnimation,
-            child: LottieSource.build(
+            child: LottieSources.build(
               src: widget.lottieSource,
               url: currentEmoji!.lottie,
               size: Size(widget.selectedEmojiSize, widget.selectedEmojiSize),
@@ -165,5 +154,16 @@ class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
         ],
       );
     }
+  }
+
+  Widget _labelBuilder() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Text(
+        currentEmoji!.label!,
+        style: widget.selectedEmojiTextStyle,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
   }
 }

@@ -112,8 +112,7 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: XenEmojify(
-                            lottieSource: LottieSource.network,
-                            // selectedEmojiSize: 10,
+                            lottieSource: LottieSources.network,
                             displayLabel: true,
                             xenEmojifyDock: XenEmojifyDock(
                               dockColor: Colors.amber.withOpacity(0.7),

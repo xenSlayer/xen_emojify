@@ -81,8 +81,8 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
                   message: widget.xenEmojis[index].label,
                   child: GestureDetector(
                     onTap: () => _handleOnTap(context, index),
-                    child: LottieSource.build(
-                      src: LottieSource.network,
+                    child: LottieSources.build(
+                      src: LottieSources.network,
                       url: widget.xenEmojis[index].lottie,
                       size: Size(
                         zoomAnimations[index].value,
