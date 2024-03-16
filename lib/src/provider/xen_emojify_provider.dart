@@ -1,5 +1,4 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
-
 import 'package:flutter/widgets.dart';
 import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
