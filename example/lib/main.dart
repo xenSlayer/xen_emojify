@@ -75,6 +75,8 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
       ),
     ];
 
+    final dockController = OverlayPortalController();
+
     return Scaffold(
       body: Center(
         child: ListView(
@@ -113,20 +115,20 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                           ),
                           child: XenEmojify(
                             lottieSource: LottieSources.network,
-                            displayLabel: true,
+                            // dockController: dockController,
+                            displayLabel: false,
                             xenEmojifyDock: XenEmojifyDock(
-                              dockColor: Colors.amber.withOpacity(0.7),
+                              dockColor: Colors.red.withOpacity(0.7),
                               onEmojiSelect: (emoji) {
                                 setState(() => initialEmoji = emoji);
                               },
                               xenEmojis: lottie,
                             ),
                             initialEmoji: i == 0 ? null : lottie[i],
-                            // placeholderWidget: const MyEmojifyWidget(),
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () => dockController.show(),
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Wrap(

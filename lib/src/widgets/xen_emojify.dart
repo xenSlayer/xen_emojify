@@ -60,7 +60,6 @@ class XenEmojify extends StatefulWidget {
   State<XenEmojify> createState() => _XenEmojifyState();
 }
 
-///
 class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
   late final LayerLink _dockLayerLink;
 
@@ -84,7 +83,7 @@ class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _selectedEmojiAnimation.disposeAnimation();
+    _selectedEmojiAnimation.disposeController();
     if (dockController.isShowing) {
       dockController.hide();
     }

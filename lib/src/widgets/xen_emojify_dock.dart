@@ -1,9 +1,6 @@
 // BSD License. Copyright © Kiran Paudel. All rights reserved
 
-import 'package:flutter/material.dart';
-import 'package:xen_emojify/src/animations/_hovered_emoji_animation_mixin.dart';
-import 'package:xen_emojify/src/provider/xen_emojify_provider.dart';
-import 'package:xen_emojify/xen_emojify.dart';
+part of '../animations/_hovered_emoji_animation_mixin.dart';
 
 /// The dock that displays list of [XenEmoji].
 /// This widget pops up when the user taps on the [XenEmojify] widget.
@@ -46,7 +43,7 @@ class XenEmojifyDock extends StatefulWidget {
 }
 
 class _XenEmojifyDockState extends State<XenEmojifyDock>
-    with HoveredEmojiAnimationMixin, TickerProviderStateMixin {
+    with _HoveredEmojiAnimationMixin, TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -78,7 +75,7 @@ class _XenEmojifyDockState extends State<XenEmojifyDock>
               animation: zoomAnimations[index],
               builder: (context, child) {
                 return Tooltip(
-                  message: widget.xenEmojis[index].label,
+                  message: widget.xenEmojis[index].label ?? '',
                   child: GestureDetector(
                     onTap: () => _handleOnTap(context, index),
                     child: LottieSources.build(

@@ -4,7 +4,11 @@ import 'dart:ui';
 
 import 'package:lottie/lottie.dart';
 
-///
+/// The source of the lottie file.
+/// 
+/// The lottie file can be from assets or network.
+/// 
+/// The [LottieBuilder] is built based on the [LottieSources].
 enum LottieSources {
   /// Lottie source from assets
   asset,

@@ -5,12 +5,7 @@ import 'package:xen_emojify/src/enums/lottie_sources.dart';
 /// The data class for [XenEmoji].
 class XenEmoji {
   ///
-  const XenEmoji(
-    this.lottie, {
-    this.label,
-    this.lottieID,
-    this.lottieSource,
-  });
+  const XenEmoji(this.lottie, {this.label, this.lottieID, this.lottieSource});
 
   /// Path to lottie file.
   ///
@@ -57,7 +52,5 @@ class XenEmoji {
   }
 
   @override
-  int get hashCode {
-    return lottie.hashCode ^ label.hashCode ^ lottieID.hashCode;
-  }
+  int get hashCode => lottie.hashCode ^ label.hashCode ^ lottieID.hashCode;
 }
