@@ -3,6 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:xen_emojify/src/animations/_selected_emoji_animation_mixin.dart';
 import 'package:xen_emojify/src/xen_emoji.dart';
 
+/// A function signature for setting an [XenEmoji].
+///
+/// The function takes an [XenEmoji] as a parameter and does not return any value.
+/// Usage example:
+/// ```dart
+/// void setEmoji(XenEmoji emoji) {}
+/// ```
+typedef SetEmoji = void Function(XenEmoji emoji);
+
 /// The provider that provides the [XenEmojifyDock] with the current [XenEmoji].
 ///
 /// The [XenEmojifyProvider] is an [InheritedWidget] that provides the [XenEmojifyDock]
@@ -13,34 +22,31 @@ class XenEmojifyProvider extends InheritedWidget {
   ///
   final OverlayPortalController dockController;
 
-  ///
+  /// The current [XenEmoji].
   final XenEmoji? currentEmoji;
 
-  ///
+  /// The function to set the current [XenEmoji].
   final SetEmoji setCurrentEmoji;
 
-  ///
+  /// The selected emoji animation.
   final SelectedEmojiAnimation selectedEmojiAnimation;
 
-  ///
-  // final AnimationController selectedEmojiController;
-
-  ///
+  /// Creates a [XenEmojifyProvider].
   XenEmojifyProvider({
-    required Widget child,
+    super.key,
+    required super.child,
     required this.dockController,
     required this.setCurrentEmoji,
     required this.selectedEmojiAnimation,
-    Key? key,
     this.currentEmoji,
-  }) : super(key: key, child: child);
+  });
 
-  ///
+  /// Returns the [XenEmojifyProvider] from the given [BuildContext].
   static XenEmojifyProvider of(BuildContext context) {
     final provider =
         context.dependOnInheritedWidgetOfExactType<XenEmojifyProvider>();
     if (provider == null) {
-      throw FlutterError('XenEmojifyStateProvider not found in context');
+      throw FlutterError('XenEmojifyProvider not found in context');
     }
     return provider;
   }
@@ -50,18 +56,9 @@ class XenEmojifyProvider extends InheritedWidget {
     return currentEmoji != oldWidget.currentEmoji;
   }
 
-  ///
+  /// display dock
   void showDock() => dockController.show();
 
-  ///
+  /// hide dock
   void hideDock() => dockController.hide();
 }
-
-/// A function signature for setting an [XenEmoji].
-///
-/// The function takes an [XenEmoji] as a parameter and does not return any value.
-/// Usage example:
-/// ```dart
-/// void setEmoji(XenEmoji emoji) {}
-/// ```
-typedef SetEmoji = void Function(XenEmoji emoji);
