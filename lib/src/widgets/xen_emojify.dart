@@ -17,7 +17,7 @@ class XenEmojify extends StatefulWidget {
     this.placeholderWidget = const Icon(Icons.add),
     this.initialEmoji,
     this.lottieSource = LottieSources.network,
-    this.displayLabel = true,
+    this.showLabel = true,
     this.selectedEmojiSize = 25,
     this.selectedEmojiTextStyle = const TextStyle(
       color: Colors.black,
@@ -38,7 +38,7 @@ class XenEmojify extends StatefulWidget {
   /// If true, the name of the selected emoji will be displayed.
   ///
   /// Defaults to true.
-  final bool displayLabel;
+  final bool showLabel;
 
   /// The size of the selected emoji.
   ///
@@ -60,7 +60,6 @@ class XenEmojify extends StatefulWidget {
   State<XenEmojify> createState() => _XenEmojifyState();
 }
 
-///
 class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
   late final LayerLink _dockLayerLink;
 
@@ -84,7 +83,7 @@ class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _selectedEmojiAnimation.disposeAnimation();
+    _selectedEmojiAnimation.disposeController();
     if (dockController.isShowing) {
       dockController.hide();
     }
@@ -150,7 +149,7 @@ class _XenEmojifyState extends State<XenEmojify> with TickerProviderStateMixin {
               size: Size(widget.selectedEmojiSize, widget.selectedEmojiSize),
             ),
           ),
-          if (widget.displayLabel) _labelBuilder()
+          if (widget.showLabel) _labelBuilder()
         ],
       );
     }

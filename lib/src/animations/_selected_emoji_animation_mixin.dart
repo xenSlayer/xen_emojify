@@ -37,14 +37,14 @@ class SelectedEmojiAnimation {
       [
         TweenSequenceItem(
           tween: Tween<double>(begin: 0.2, end: 1.4),
+          weight: 3,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(begin: 1.4, end: 7),
           weight: 4,
         ),
         TweenSequenceItem(
-          tween: Tween<double>(begin: 1.4, end: 5),
-          weight: 7,
-        ),
-        TweenSequenceItem(
-          tween: Tween<double>(begin: 5, end: 1.4),
+          tween: Tween<double>(begin: 7, end: 1.4),
           weight: 1,
         ),
       ],
@@ -52,5 +52,5 @@ class SelectedEmojiAnimation {
   }
 
   ///
-  void disposeAnimation() => selectedEmojiController.dispose();
+  void disposeController() => selectedEmojiController.dispose();
 }
