@@ -61,12 +61,12 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f984/lottie.json',
         label: 'Unicorn',
-        lottieID: '1f60f',
+        lottieID: '1f984',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1faa9/lottie.json',
         label: 'Mirror Ball',
-        lottieID: '1f602',
+        lottieID: '1faa9',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f603/lottie.json',
@@ -76,21 +76,19 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/26a1/lottie.json',
         label: 'Zap',
-        lottieID: '1f603',
+        lottieID: '26a1',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f47d/lottie.json',
         label: 'Alien',
-        lottieID: '1f603',
+        lottieID: '1f47d',
       ),
       const XenEmoji(
         'https://fonts.gstatic.com/s/e/notoemoji/latest/1f92e/lottie.json',
         label: 'Vomit',
-        lottieID: '1f603',
+        lottieID: '1f92e',
       ),
     ];
-
-    final dockController = OverlayPortalController();
 
     return Scaffold(
       body: Center(
@@ -141,30 +139,24 @@ class _XenEmojifyExampleState extends State<XenEmojifyExample> {
                             initialEmoji: i == 0 ? null : lottie,
                           ),
                         ),
-                        InkWell(
-                          onTap: () => dockController.show(),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Wrap(
-                              children: [
-                                Icon(Icons.comment),
-                                SizedBox(width: 5),
-                                Text('Comment'),
-                              ],
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Wrap(
+                            children: [
+                              Icon(Icons.comment),
+                              SizedBox(width: 5),
+                              Text('Comment'),
+                            ],
                           ),
                         ),
-                        InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Wrap(
-                              children: [
-                                Icon(Icons.share_rounded),
-                                SizedBox(width: 5),
-                                Text('Share'),
-                              ],
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Wrap(
+                            children: [
+                              Icon(Icons.share_rounded),
+                              SizedBox(width: 5),
+                              Text('Share'),
+                            ],
                           ),
                         ),
                       ],

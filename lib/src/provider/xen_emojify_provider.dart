@@ -22,16 +22,16 @@ class XenEmojifyProvider extends InheritedWidget {
   ///
   final OverlayPortalController dockController;
 
-  ///
+  /// The current [XenEmoji].
   final XenEmoji? currentEmoji;
 
-  ///
+  /// The function to set the current [XenEmoji].
   final SetEmoji setCurrentEmoji;
 
-  ///
+  /// The selected emoji animation.
   final SelectedEmojiAnimation selectedEmojiAnimation;
 
-  ///
+  /// Creates a [XenEmojifyProvider].
   XenEmojifyProvider({
     super.key,
     required super.child,
@@ -41,7 +41,7 @@ class XenEmojifyProvider extends InheritedWidget {
     this.currentEmoji,
   });
 
-  ///
+  /// Returns the [XenEmojifyProvider] from the given [BuildContext].
   static XenEmojifyProvider of(BuildContext context) {
     final provider =
         context.dependOnInheritedWidgetOfExactType<XenEmojifyProvider>();
@@ -56,9 +56,9 @@ class XenEmojifyProvider extends InheritedWidget {
     return currentEmoji != oldWidget.currentEmoji;
   }
 
-  ///
+  /// display dock
   void showDock() => dockController.show();
 
-  ///
+  /// hide dock
   void hideDock() => dockController.hide();
 }
