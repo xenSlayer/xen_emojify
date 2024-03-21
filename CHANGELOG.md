@@ -7,5 +7,3 @@
 
 * 🦄 Smooth animation.
 * 📖 Adds documentation of LottieSources.
-* ✨ Allows user to add their own OverlayPortalController to show and hide dock.
-* ➕ Adds support for web.
