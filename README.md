@@ -12,7 +12,7 @@
 </a>
 
 
-<img src="https://github.com/xenSlayer/xen_emojify/misc/xen-emojify.gif"><hr>
+<img src="misc/xen-emojify.gif"><hr>
 
 xen_emojify is a versatile Flutter package designed to enhance user interaction by providing a rich and engaging way to display Facebook-like reactions within your app. Leveraging the power of <a href='https://pub.dev/packages/lottie' target="_blank">Lottie</a>, a dynamic animation library, this package delivers seamless and visually stunning animations, ensuring a delightful user experience.
 
@@ -29,7 +29,7 @@ Whether you're developing a social media platform, a content-sharing app, or any
 
 <br>
 
-<a href="https://www.buymeacoffee.com/kiranpaudel1892" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;" ></a>
+<a href="https://www.buymeacoffee.com/kiranpaudel1892" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 70px !important; width: 250px !important;" ></a>
 
 ## FREE LOTTIES
 
